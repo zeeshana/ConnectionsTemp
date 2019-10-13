@@ -14,6 +14,14 @@ export class AuthService {
   constructor(private firebaseAuth: AngularFireAuth) {
     this.user = firebaseAuth.authState;
     console.log(this.user);
+
+    // Use the following for authentication
+    /* firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+      }
+    }); */
+
   }
 
   logInWithTwitter() {
@@ -21,4 +29,14 @@ export class AuthService {
       new firebase.auth.TwitterAuthProvider()
     );
   }
+
+  getTwitterProfilePhoto() {
+
+  }
+
+  getCurrentUser() {
+    return firebase.auth().currentUser;
+  }
+  
+
 }

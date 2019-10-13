@@ -24,8 +24,19 @@ export class AppComponent {
     {
       title: 'Log In or Join ',
       url: '/login',
-      icon: 'lock'
+      icon: 'log-in'
+    },
+    {
+      title: 'Proile ',
+      url: '/profile',
+      icon: 'person'
+    },
+    {
+      title: 'Log out ',
+      url: '/login',
+      icon: 'log-out'
     }
+
   ];
 
   constructor(
