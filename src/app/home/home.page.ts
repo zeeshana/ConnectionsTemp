@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { People, PeopleService } from '../services/people.service';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @Component({

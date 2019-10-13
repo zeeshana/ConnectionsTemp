@@ -20,10 +20,16 @@ import { AuthService } from './services/auth.service';
 
 import { IonicStorageModule } from '@ionic/storage';
 
+import { AddskillPageModule } from './modals/addskill/addskill.module';
+
+import { AddskillPage } from './modals/addskill/addskill.page';
+
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+    AddskillPage
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -31,7 +37,8 @@ import { IonicStorageModule } from '@ionic/storage';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AddskillPageModule
   ],
   providers: [
     StatusBar,
