@@ -25,17 +25,25 @@ export interface People {
   role: string;
 }
 
+export interface Skill {
+  id: string;
+  name: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class PeopleService {
+export class DBService {
   private peopleCollection: AngularFirestoreCollection<People>;
   private people: Observable<People[]>;
+
+  private skillsCollection: AngularFirestoreCollection<Skill>;
+  private skill: Observable<Skill[]>;
 
 
   constructor(private db: AngularFirestore) {
     this.peopleCollection = db.collection<People>('people');
-
+    this.skillsCollection = db.collection<Skill>('skills');
     /* this.people = this.peopleCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -48,7 +56,7 @@ export class PeopleService {
 
   }
 
-  getPeople() {
+  getPeople() { 
     // return this.people;
     return this.peopleCollection.valueChanges();
   }
@@ -62,23 +70,16 @@ export class PeopleService {
   }
 
   getPersonByQuery(key: string, value: string) {
-
-    console.log('key: ' + key);
-    console.log('value: ' + value);
-
     return this.db.collection('people', ref => ref
-      // .orderBy("username")
       .where(key, '==', value))
-      //.startAt(self.searchValue.toLowerCase())
-      //.endAt(self.searchValue.toLowerCase()+"\uf8ff")
-      //.limit(10))
       .valueChanges();
+  } 
+
+  addSkill(skill: Skill) {
+    console.log(skill);
+    return this.skillsCollection.doc<Skill>(skill.id).set(skill);
+
   }
-
- 
-  
-
- 
 
   /* getCategory(id: string) {
     return this.categoriesCollection.doc<Category>(id).valueChanges();

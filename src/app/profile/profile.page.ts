@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { PeopleService, People } from '../services/people.service';
+import { DBService, People } from '../services/db.service';
 import { AddskillPage } from '../modals/addskill/addskill.page';
 
 
@@ -12,16 +12,14 @@ import { AddskillPage } from '../modals/addskill/addskill.page';
 })
 export class ProfilePage implements OnInit {
   private user: any;
-  constructor(private authService: AuthService, private peopleService: PeopleService, private modalController: ModalController) {
+  constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController) {
 
   }
 
   ngOnInit() {
     let currentUser = this.authService.getCurrentUser();
-    console.log(currentUser.uid);
-    this.peopleService.getPersonByQuery('uid', currentUser.uid).subscribe(res => {
-      console.log(res[0].name);
-      console.log(res[0].handle);
+    this.dbService.getPersonByQuery('uid', currentUser.uid).subscribe(response => {
+      const res: any = response;
       this.user = res[0];
     });
   }

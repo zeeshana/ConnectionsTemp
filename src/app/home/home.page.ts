@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { People, PeopleService } from '../services/people.service';
+import { People, DBService, Skill } from '../services/db.service';
 
 
 
@@ -10,24 +10,36 @@ import { People, PeopleService } from '../services/people.service';
 })
 export class HomePage {
 
-  people: People[];
-  constructor(private peopleService: PeopleService) { 
-    console.log('constructor');
+  skills: Skill = {id: 'react-native', name: 'React Native'}; 
+
+  people: People[]; 
+  constructor(private dbService: DBService) { 
+
   }
 
   ngOnInit() {
-    console.log('nginito');
-    this.peopleService.getPeople().subscribe(res => {
+    this.dbService.getPeople().subscribe(res => {
       this.people = res;
-      console.log(this.people);
     });
-    /* this.addAll(); */
+    this.addAll();
   }
 
 
-
+  addAll() {
+    //this.skills.forEach( (element) => {
+      this.dbService.addSkill(this.skills)
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+    //});
+  }
   /* remove(category) {
     this.categoryService.removeCategory(category.id);
   } */
+
+  
 
 }

@@ -23,11 +23,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AddskillPageModule } from './modals/addskill/addskill.module';
 
 import { AddskillPage } from './modals/addskill/addskill.page';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatSliderModule } from '@angular/material/slider';
 
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [
+  entryComponents: [ 
     AddskillPage
   ],
   imports: [
@@ -38,7 +41,10 @@ import { AddskillPage } from './modals/addskill/addskill.page';
     AngularFirestoreModule,
     AngularFireAuthModule,
     IonicStorageModule.forRoot(),
-    AddskillPageModule
+    AddskillPageModule,
+    NoopAnimationsModule,
+    MatSliderModule
+    
   ],
   providers: [
     StatusBar,

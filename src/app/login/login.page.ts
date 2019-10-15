@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { People, PeopleService } from '../services/people.service';
+import { People, DBService } from '../services/db.service'; 
 
 @Component({
   selector: 'app-login',
@@ -13,14 +13,14 @@ export class LoginPage implements OnInit {
 
   private person: People;
   constructor(private authService: AuthService, private navCtrl: NavController, private storage: Storage,
-    private peopleService: PeopleService) { }
+    private dbService: DBService) { }
 
   ngOnInit() {
   }
 
   logInWithTwitter() {
-    this.authService.logInWithTwitter().then(res => {
-      console.log(res);
+    this.authService.logInWithTwitter().then(response => {
+      const res: any = response;
 
       this.person = {
         handle: res.additionalUserInfo.username,
@@ -39,11 +39,11 @@ export class LoginPage implements OnInit {
         uid: res.user.uid,
         updated_profile: false,
         role: 'user'
-      }
-       
+      };
+
       // TODO: Check before adding the user if the user alread exists
-      
-      let personExiting = this.peopleService.getPerson(this.person.handle);
+
+      let personExiting = this.dbService.getPerson(this.person.handle);
       if(personExiting.handle != null) {
         // Here just make some updates if required. Maybe access tokens etc.
         if(personExiting.updated_profile == null || personExiting.updated_profile == false) {
@@ -52,7 +52,7 @@ export class LoginPage implements OnInit {
           this.navCtrl.navigateForward('/home');
         }
       }  else {
-        this.peopleService.addPerson(this.person);
+        this.dbService.addPerson(this.person);
         this.navCtrl.navigateForward('/profile');
       }
       
@@ -60,9 +60,6 @@ export class LoginPage implements OnInit {
       
 
     });
-    /* this.authService.logInWithTwitter();
-    console.log(this.authService.user);
-    this.navCtrl.navigateForward('/home'); */
   }
 
 }

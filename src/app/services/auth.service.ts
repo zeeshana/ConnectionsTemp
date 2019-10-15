@@ -13,7 +13,6 @@ export class AuthService {
 
   constructor(private firebaseAuth: AngularFireAuth) {
     this.user = firebaseAuth.authState;
-    console.log(this.user);
 
     // Use the following for authentication
     /* firebase.auth().onAuthStateChanged(user => {

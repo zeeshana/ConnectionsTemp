@@ -12,6 +12,16 @@ export const environment = {
     storageBucket: "nomorelinkedin-f0fb6.appspot.com",
     messagingSenderId: "955790711443",
     appId: "1:955790711443:web:ddcc4a287a15935ed44b66"
+
+    /* apiKey: "AIzaSyCssUxUPGlBUZUwioFlxjdTrRgoXdVspsA",
+    authDomain: "connections-test-edffe.firebaseapp.com",
+    databaseURL: "https://connections-test-edffe.firebaseio.com",
+    projectId: "connections-test-edffe",
+    storageBucket: "connections-test-edffe.appspot.com",
+    messagingSenderId: "372970073830",
+    appId: "1:372970073830:web:dd78928dd03b341f1ad527",
+    measurementId: "G-BHWP110DHZ"*/
+    
   }
 };
 

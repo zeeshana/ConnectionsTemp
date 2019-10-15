@@ -7,11 +7,15 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./addskill.page.scss'],
 })
 export class AddskillPage implements OnInit {
-
-  constructor(private modalCtrl: ModalController) { }
+  
+  
+  constructor(public modalCtrl: ModalController) { }
 
   ngOnInit() {
-  }
+   
+  } 
+
+  
 
   dismissModal() {
     // using the injected ModalController this page
