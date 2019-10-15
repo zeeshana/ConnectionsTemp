@@ -12,45 +12,64 @@
   </ion-header>
 
 <ion-content class="ion-padding py-2">
-    <div class="mb-4 pr-12">
+      <div class="mb-4 pr-12 mt-4">
         <label class="block text-gray-700 font-bold mb-2" for="username">
-          Tell us what you are good at?
+         Your skill
         </label>
-        <input class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="skill" type="text" placeholder="Programming, Sales, or Marketing">
+        <input class="form-input block appearance-none w-full " id="skill" type="text" placeholder="Programming, Sales, or Marketing">
       </div>
-      <div class="mb-4 pr-12">
+      <div class="mb-4 pr-12 mt-8">
           <label class="block text-gray-700 font-bold mb-2" for="username">
-            When did you first starting using <strong>[skill]</strong>?
+            When did you start using <strong>[skill]</strong>?
           </label>
-      
-          <div class="relative  ">
-              <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                <option>New Mexico</option>
-                <option>Missouri</option>
-                <option>Texas</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </div>
+          <div class="flex flex-wrap">
+          <div class="mr-2">
+            <select class="form-select">
+              <option *ngFor="let m of months">{{m.display}}</option>
+            </select>
             </div>
+          
+            <div class="  ">
+                <select class="form-select">
+                  <option *ngFor="let y of years" >{{y.display}}</option>
+                </select>
+                </div>
+              </div>
+                
         </div>
 
 
-        <div class="mb-4 pr-12">
+        <div class="mb-4 pr-12 mt-8">
             <label class="block text-gray-700 font-bold mb-2" for="username">
-              When did you last use it?
+                When did you last use <strong>[skill]</strong>?
             </label>
-        
-            <div class="relative pr-4 ">
-                <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                  <option>New Mexico</option>
-                  <option>Missouri</option>
-                  <option>Texas</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                </div>
+            <div>
+                <label class="mt-3 flex items-center sm:w-1/4 sm:px-2 lg:w-1/2 xl:w-full">
+                  <input class="form-checkbox text-blue-600" type="checkbox" name="balcony">
+                  <span class="ml-2">Currently using this skill</span>
+                </label>
+            </div>
+            <div class="flex flex-wrap mt-2">
+            <div class="mr-2">
+              <select class="form-select">
+                <option *ngFor="let m of months">{{m.display}}</option>
+              </select>
               </div>
+            
+              <div class="  ">
+                  <select class="form-select">
+                    <option *ngFor="let y of years" >{{y.display}}</option>
+                  </select>
+                  </div>
+                </div>
+                  
           </div>
+
+          <div class="mt-2">
+              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="dismissModal()">
+                  Add this skill
+              </button>
+          </div>
+      
 </ion-content>
  

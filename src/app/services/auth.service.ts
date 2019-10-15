@@ -15,16 +15,17 @@ export class AuthService {
     this.user = firebaseAuth.authState;
 
     // Use the following for authentication
-    /* firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
+        this.user = user;
       }
-    }); */
+    });
 
   }
 
   logInWithTwitter() {
-    return this.firebaseAuth.auth.signInWithPopup(
+    return this.firebaseAuth.auth.signInWithRedirect(
       new firebase.auth.TwitterAuthProvider()
     );
   }
@@ -35,6 +36,10 @@ export class AuthService {
 
   getCurrentUser() {
     return firebase.auth().currentUser;
+  }
+
+  getUser() {
+    return this.user;
   }
   
 
