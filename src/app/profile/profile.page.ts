@@ -18,10 +18,12 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     let currentUser = this.authService.getCurrentUser();
-    this.dbService.getPersonByQuery('uid', currentUser.uid).subscribe(response => {
-      const res: any = response;
-      this.user = res[0];
-    });
+    if(currentUser != null) {
+      this.dbService.getPersonByQuery('uid', currentUser.uid).subscribe(response => {
+        const res: any = response;
+        this.user = res[0];
+      }); 
+    }
   }
 
   async presentAddSkillModal() {
