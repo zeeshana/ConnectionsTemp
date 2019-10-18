@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { People, DBService, Skill } from '../services/db.service';
+import { TranslateConfigService } from '../services/translate-config.service';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 
 
@@ -10,11 +13,12 @@ import { People, DBService, Skill } from '../services/db.service';
 })
 export class HomePage {
 
-  skills: Skill = {id: 'react-native', name: 'React Native'}; 
+  selectedLanguage:string;
+  skills: Skill = {id: 'react-native', name: 'React Native'};
 
   people: People[]; 
-  constructor(private dbService: DBService) { 
-
+  constructor(private dbService: DBService, private translateConfigService: TranslateConfigService) {
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
   ngOnInit() {
@@ -22,6 +26,10 @@ export class HomePage {
       this.people = res;
     });
     this.addAll();
+  }
+
+  languageChanged(){
+    this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 
 

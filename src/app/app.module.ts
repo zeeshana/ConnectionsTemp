@@ -27,10 +27,18 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateConfigService } from './services/translate-config.service';
+ 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [ 
+  entryComponents: [
     AddskillPage
   ],
   imports: [
@@ -42,15 +50,21 @@ import { MatSliderModule } from '@angular/material/slider';
     AngularFireAuthModule,
     IonicStorageModule.forRoot(),
     AddskillPageModule,
-    NoopAnimationsModule,
-    MatSliderModule
-    
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService
+    AuthService,
+    TranslateConfigService
   ],
   bootstrap: [AppComponent]
 })

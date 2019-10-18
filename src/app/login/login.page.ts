@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
 
       // TODO: Check before adding the user if the user alread exists
 
-      let personExiting = this.dbService.getPerson(this.person.handle);
+      let personExiting: any  = this.dbService.getPerson(this.person.handle);
       if(personExiting.handle != null) {
         // Here just make some updates if required. Maybe access tokens etc.
         if(personExiting.updated_profile == null || personExiting.updated_profile == false) {
