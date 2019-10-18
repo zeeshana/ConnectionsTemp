@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
     /* console.log(currentUser);*/
     this.authService.getUser().subscribe( user => {
       this.dbService.getPersonByQuery('uid', user.uid).subscribe(response => {
-        const res: any = response;
+        const res = response;
         this.user = res[0];
       });
 

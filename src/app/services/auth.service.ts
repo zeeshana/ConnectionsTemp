@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   logInWithTwitter() {
-    return this.firebaseAuth.auth.signInWithRedirect(
+    return this.firebaseAuth.auth.signInWithRedirect( 
       new firebase.auth.TwitterAuthProvider()
     );
   }
@@ -41,6 +41,4 @@ export class AuthService {
   getUser() {
     return this.user;
   }
-  
-
 }
