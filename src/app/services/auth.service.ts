@@ -9,10 +9,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<firebase.User>;
+  user: firebase.User;
 
   constructor(private firebaseAuth: AngularFireAuth) {
-    this.user = firebaseAuth.authState;
 
     // Use the following for authentication
     firebase.auth().onAuthStateChanged(user => {
@@ -25,7 +24,7 @@ export class AuthService {
   }
 
   logInWithTwitter() {
-    return this.firebaseAuth.auth.signInWithRedirect( 
+    return this.firebaseAuth.auth.signInWithRedirect(
       new firebase.auth.TwitterAuthProvider()
     );
   }

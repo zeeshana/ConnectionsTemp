@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { DBService, People } from '../services/db.service';
 import { AddskillPage } from '../modals/addskill/addskill.page';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
 
 @Component({
@@ -11,21 +13,22 @@ import { AddskillPage } from '../modals/addskill/addskill.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  private user: any;
-  constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController) {
+  user: firebase.User;
 
+  constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController,
+              private firebaseAuth: AngularFireAuthModule ) {
   }
 
   ngOnInit() {
-    
-    /* console.log(currentUser);*/
-    this.authService.getUser().subscribe( user => {
-      this.dbService.getPersonByQuery('uid', user.uid).subscribe(response => {
-        const res = response;
-        this.user = res[0];
-      });
 
+    /* console.log(currentUser);*/
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        this.user = user;
+      }
     });
+
   }
 
   async presentAddSkillModal() {

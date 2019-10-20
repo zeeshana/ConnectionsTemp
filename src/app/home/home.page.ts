@@ -24,30 +24,12 @@ export class HomePage {
   ngOnInit() {
     this.dbService.getPeople().subscribe(res => {
       this.people = res;
+      console.log(this.people);
     });
-    this.addAll();
   }
 
   languageChanged(){
-    this.translateConfigService.setLanguage(this.selectedLanguage);
+    this.translateConfigService.setLanguage(this.selectedLanguage); 
   }
-
-
-  addAll() {
-    //this.skills.forEach( (element) => {
-      this.dbService.addSkill(this.skills)
-      .then(() => {
-        console.log("Document successfully written!");
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
-    //});
-  }
-  /* remove(category) {
-    this.categoryService.removeCategory(category.id);
-  } */
-
-  
 
 }

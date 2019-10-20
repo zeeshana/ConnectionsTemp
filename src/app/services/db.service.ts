@@ -62,7 +62,9 @@ export class DBService {
   }
 
   addPerson(person: People) {
-    return this.peopleCollection.doc<People>(person.handle).set(person);
+    if( person != null ) {
+      return this.peopleCollection.doc<People>(person.handle).set(person);
+    }
     // return this.peopleCollection.add(person);
   }
   getPerson(id: string) {
@@ -76,9 +78,7 @@ export class DBService {
   } 
 
   addSkill(skill: Skill) {
-    console.log(skill);
     return this.skillsCollection.doc<Skill>(skill.id).set(skill);
-
   }
 
   /* getCategory(id: string) {
