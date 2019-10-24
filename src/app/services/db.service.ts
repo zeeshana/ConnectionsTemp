@@ -3,10 +3,9 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import Parse from 'parse';
 
-export interface People {
+export interface Person {
   handle: string; // Use the twitter handle
   name: string; // Use the name from Twitter
   tagline: string; // Use the one from Twitter initially
@@ -14,7 +13,7 @@ export interface People {
   email: string;
   dob: any;
   joined: any;
-  location: string;
+  location: string; 
   photo: string;
   accessToken: string;
   providerId: string;
@@ -25,76 +24,53 @@ export interface People {
   role: string;
 }
 
-export interface Skill {
-  id: string;
-  name: string;
-}
-
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class DBService {
-  private peopleCollection: AngularFirestoreCollection<People>;
-  private people: Observable<People[]>;
+  
+  private Person = Parse.Object.extend("Person");
+  private people: any;
 
-  private skillsCollection: AngularFirestoreCollection<Skill>;
-  private skill: Observable<Skill[]>;
+  constructor() {
+    
+    Parse.initialize("z5etbrSgUBGg93mKcmWajXsAU2eDHLkO0Zrsoolb", "X5BDbzZUvn7MmFwyZnQOpB1zwR1WuTGtG10AK9h8");
+    Parse.serverURL = 'https://parseapi.back4app.com/';
+    
+  }
 
+  addPersonDummy() {
 
-  constructor(private db: AngularFirestore) {
-    this.peopleCollection = db.collection<People>('people');
-    this.skillsCollection = db.collection<Skill>('skills');
-    /* this.people = this.peopleCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    ); */
+    var person = new this.Person();
+    person.set("handle", "Naval");
+    person.set("name", "naval");
+    person.set("tagline", "Vitam impendere vero.");
+    person.set("website", "theangelphilosopher.com");
+    person.set("website_short_url", "https://t.co/7h5Bg4SvC6?amp=1");
+    person.set("email", "naval@naval.com");
+    person.set("dob", new Date());
+    person.set("joined", new Date());
+    person.set("location", "Here");
+    person.set("photo", "https://avatars.io/twitter/zaheerbaloch");
+    person.set("accessToken", "");
+    person.set("providerId", "Twitter");
+    person.set("secret", "Twitter");
+    person.set("signInMethod", "");
+    person.set("uid", "12344556788");
+    person.set("publishedProfile", true);
+    person.set("role", "user");
+    
+    person.save().then((install) => {
+      return "ok";
+    }, (install, error) => {
+      return "fail"
+    });
 
   }
 
-  getPeople() { 
-    // return this.people;
-    return this.peopleCollection.valueChanges();
+  public getPeople() {
+    const query = new Parse.Query(this.Person);
+    return query.find();
   }
-
-  addPerson(person: People) {
-    if( person != null ) {
-      return this.peopleCollection.doc<People>(person.handle).set(person);
-    }
-    // return this.peopleCollection.add(person);
-  }
-  getPerson(id: string) {
-    return this.peopleCollection.doc<People>(id).valueChanges();
-  }
-
-  getPersonByQuery(key: string, value: string) {
-    return this.db.collection('people', ref => ref
-      .where(key, '==', value))
-      .valueChanges();
-  } 
-
-  addSkill(skill: Skill) {
-    return this.skillsCollection.doc<Skill>(skill.id).set(skill);
-  }
-
-  /* getCategory(id: string) {
-    return this.categoriesCollection.doc<Category>(id).valueChanges();
-  }
-
-  updateCategory(category: Category, id: string) {
-    return this.categoriesCollection.doc(id).update(category);
-  }
-
-  addCategory(category: Category) {
-    return this.categoriesCollection.add(category);
-  }
-
-  removeCategory(id: string) {
-    return this.categoriesCollection.doc(id).delete();
-  } */
 
 }

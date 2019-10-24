@@ -1,0 +1,11 @@
+.timeline_container {
+    display: inline-grid; // initializes css grid for self and children
+    grid-auto-columns: 40px; // defines the default width of each column
+    grid-auto-rows: 40px; // defines the height of each row
+    /* below the key property to making compact rows */
+    grid-auto-flow: row dense;
+}
+
+.timeline_item {
+    grid-column: 3 / 5; // defines start and end column of the item
+}

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { People, DBService, Skill } from '../services/db.service';
-import { TranslateConfigService } from '../services/translate-config.service';
-import { TranslateModule } from '@ngx-translate/core';
-
-
-
+import { DBService } from '../services/db.service';
+import Parse from 'parse';
 
 @Component({
   selector: 'app-home',
@@ -12,24 +8,28 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  public people: any[];
+  public text: "Zaheer";
 
-  selectedLanguage:string;
-  skills: Skill = {id: 'react-native', name: 'React Native'};
-
-  people: People[]; 
-  constructor(private dbService: DBService, private translateConfigService: TranslateConfigService) {
-    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  constructor(private dbService: DBService) {
+    // dbService.addPersonDummy();
+    
   }
 
   ngOnInit() {
-    this.dbService.getPeople().subscribe(res => {
-      this.people = res;
+    this.dbService.getPeople().then( result => {
+      this.people = result;
+     for(let i=0; i<this.people.length; i++) {
+        let person = this.people[i];
+        console.log( person.attributes.handle );
+      }
       console.log(this.people);
     });
+
   }
 
-  languageChanged(){
-    this.translateConfigService.setLanguage(this.selectedLanguage); 
+  ionViewDidEnter() {
+    
   }
 
 }

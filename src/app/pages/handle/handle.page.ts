@@ -27,12 +27,12 @@ export class HandlePage implements OnInit {
 
 
   ngOnInit() {
-    this.activateRoute.params.subscribe( params => {
+    /* this.activateRoute.params.subscribe( params => {
       this.dbService.getPersonByQuery('handle', params.handle).subscribe(response => {
         const res = response;
         this.user = res[0];
       });
-    });
+    }); */ 
   }
 
   ionViewDidEnter() {
@@ -48,8 +48,8 @@ export class HandlePage implements OnInit {
           datasets: [
           {
               label: "React",
-              backgroundColor: "#4299e1",
-              borderColor: "#4299e1",
+              backgroundColor: "#90cdf4",
+              borderColor: "#90cdf4",
               fill: false,
               borderWidth : 15,
               pointRadius : 0,
@@ -65,9 +65,9 @@ export class HandlePage implements OnInit {
           },
           {
             label: "Java",
-              backgroundColor: "#4299e1",
-              borderColor: "#4299e1",
-              fill: false,
+              backgroundColor: "#90cdf4",
+              borderColor: "#90cdf4",
+              fill: false, 
               borderWidth : 15,
               pointRadius : 0,
               data: [
@@ -83,8 +83,8 @@ export class HandlePage implements OnInit {
           {
 
             label: "Jone",
-              backgroundColor: "#4299e1",
-              borderColor: "#4299e1",
+              backgroundColor: "#90cdf4",
+              borderColor: "#90cdf4",
               fill: false,
               borderWidth : 15,
               pointRadius : 0,
@@ -100,8 +100,8 @@ export class HandlePage implements OnInit {
           },
           {
             label: "Jone",
-              backgroundColor: "#4299e1",
-              borderColor: "#4299e1",
+              backgroundColor: "#90cdf4",
+              borderColor: "#90cdf4",
               fill: false,
               borderWidth : 15,
               pointRadius : 0,
@@ -117,8 +117,8 @@ export class HandlePage implements OnInit {
           },
           {
             label: "Jone",
-              backgroundColor: "#4299e1",
-              borderColor: "#4299e1",
+              backgroundColor: "#90cdf4",
+              borderColor: "#90cdf4",
               fill: false,
               borderWidth : 15,
               pointRadius : 0,
@@ -161,8 +161,7 @@ export class HandlePage implements OnInit {
                       // display: false
                   },
                   ticks : {
-                      beginAtZero: true,
-                      
+                      beginAtZero: true, 
                       fontSize: 18,
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
@@ -173,6 +172,8 @@ export class HandlePage implements OnInit {
                         if(value == 1) { return "Java" } // Bring these values from an array/map {3: "Java"}
                         return "";
                       },
+                      stepSize: 1,
+                      max: 5
                   }
               }]
           }

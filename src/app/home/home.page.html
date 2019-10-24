@@ -10,10 +10,11 @@
 </ion-header>
   
 <ion-content>
+  
   <div class="max-w-4xl mx-auto flex flex-col" >
     <div class="flex-1 mt-4">
       <div class="border-b-2 p-3 md:flex" *ngFor="let p of people">
-        <img src="https://avatars.io/twitter/{{p.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
+        <img src="https://avatars.io/twitter/naval" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
         <div class="person-info ">
           <a class="person-name font-bold text-3xl" href="/{{p.handle}}">
             {{p.name}}
@@ -42,4 +43,6 @@
       </div>
     </div>
   </div>
+  
+
 </ion-content>
