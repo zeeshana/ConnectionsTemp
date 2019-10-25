@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { DBService, People } from '../services/db.service';
+import { DBService } from '../services/db.service';
 import { AddskillPage } from '../modals/addskill/addskill.page';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 
@@ -15,8 +14,7 @@ import * as firebase from 'firebase/app';
 export class ProfilePage implements OnInit {
   user: firebase.User;
 
-  constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController,
-              private firebaseAuth: AngularFireAuthModule ) {
+  constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController) {
   }
 
   ngOnInit() {

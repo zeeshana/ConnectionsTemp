@@ -1,28 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Observer } from 'rxjs';
+// import { map } from 'rxjs/operators';
 
 import Parse from 'parse';
-
-export interface Person {
-  handle: string; // Use the twitter handle
-  name: string; // Use the name from Twitter
-  tagline: string; // Use the one from Twitter initially
-  website: string;
-  email: string;
-  dob: any;
-  joined: any;
-  location: string; 
-  photo: string;
-  accessToken: string;
-  providerId: string;
-  secret: string;
-  signInMethod: string;
-  uid: string;
-  updated_profile: boolean;
-  role: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +11,7 @@ export class DBService {
   
   private Person = Parse.Object.extend("Person");
   private people: any;
+  observer: Observer<any>;
 
   constructor() {
     
@@ -68,9 +49,29 @@ export class DBService {
 
   }
 
-  public getPeople() {
-    const query = new Parse.Query(this.Person);
-    return query.find();
+  public getPeople():Observable<any[]> {
+    const query = new Parse.Query(this.Person); 
+    query.find().then( result => {
+      return this.observer.next(result);
+    });
+
+    return new Observable(observer => { this.observer = observer});
+
+  } 
+
+ 
+
+  public getPerson(key: string, value: string):Observable<any> {
+    const query = new Parse.Query(this.Person); 
+    query.equalTo(key, value);
+    
+    query.find().then( result => {
+      console.log(result.length);
+      return this.observer.next(result);
+    });
+
+    return new Observable(observer => { this.observer = observer});
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DBService } from '../services/db.service';
-import Parse from 'parse';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -8,28 +8,27 @@ import Parse from 'parse';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public people: any[];
-  public text: "Zaheer";
+  people: Array<any> = [];
+  random = [];
+  // Array is loaded only on resize thats weird.
+  
 
-  constructor(private dbService: DBService) {
+  constructor(public dbService: DBService) {
     // dbService.addPersonDummy();
+    
     
   }
 
   ngOnInit() {
-    this.dbService.getPeople().then( result => {
+    this.dbService.getPeople().subscribe( result => {   
       this.people = result;
-     for(let i=0; i<this.people.length; i++) {
-        let person = this.people[i];
-        console.log( person.attributes.handle );
-      }
-      console.log(this.people);
-    });
-
-  }
-
-  ionViewDidEnter() {
+      this.random = [1, 2, 3];
+     }); 
     
   }
 
+  ionViewDidEnter() {
+  
+   
+  }
 }

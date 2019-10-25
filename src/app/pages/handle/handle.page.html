@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title> 
       Profile
@@ -16,20 +16,20 @@
             
             <div class="md:flex">
                
-                <img src="https://avatars.io/twitter/{{user?.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
+                <img src="https://avatars.io/twitter/{{user?.attributes.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
                 <div class="person-info ">
-                  <a class="person-name font-bold text-3xl" href="/{{user?.handle}}">
-                    {{user?.name}}
-                  </a>
+                  <div class="person-name font-bold text-3xl">
+                    {{user?.attributes.name}}
+                  </div>
                   <div class="person-social">
-                    <a href="/{{user?.handle}}" class="mr-2 text-gray-600">@{{user?.handle}}</a>
-                    <a href="http://{{user?.website}}" class="text-gray-600">
+                    <div class="mr-2 text-gray-600">@{{user?.attributes.handle}}</div>
+                    <a href="http://{{user?.attributes.website}}" class="text-gray-600">
                         <svg class="inline" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10" stroke="#4a5568" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg> 
-                        {{user?.website}}
+                        {{user?.attributes.website}}
                     </a> 
                   </div>
                   <div class="person-tagline mt-2">
-                    {{user?.tagline}}
+                    {{user?.attributes.tagline}}
                   </div>
                 </div>
               </div>
