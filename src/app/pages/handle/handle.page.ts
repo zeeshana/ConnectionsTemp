@@ -15,7 +15,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./handle.page.scss'],
 })
 export class HandlePage implements OnInit {
-  @ViewChild('barChart') barChart;
+  @ViewChild('barChart', {static: true}) barChart;
 
   bars: any;
   colorArray: any;
@@ -27,6 +27,14 @@ export class HandlePage implements OnInit {
 
 
   ngOnInit() {
+    this.activateRoute.params.subscribe( params => {
+      this.dbService.getPerson('handle', params.handle).subscribe( result => {   
+        console.log (result);
+        this.user = result[0];
+       }); 
+    });
+    
+
     /* this.activateRoute.params.subscribe( params => {
       this.dbService.getPersonByQuery('handle', params.handle).subscribe(response => {
         const res = response;
