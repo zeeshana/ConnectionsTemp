@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 export class SessionService {
   constructor(private http: HttpClient) { }
   getRedirectUrl() {
-  return this.http.get('http://localhost:8080/sessions/connect')
+  return this.http.get('https://thirsty-rosalind-876957.netlify.com/.netlify/functions/server/connect')
 }
   saveAccessToken(oauthToken: string, oauthVerifier: string) {
-    return this.http.get(`http://localhost:8080/sessions/saveAccessTokens?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`)
+    return this.http.get(`https://thirsty-rosalind-876957.netlify.com/.netlify/functions/server/saveAccessTokens?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`)
   }
 }
