@@ -34,7 +34,13 @@
                 "glob": "**/*",
                 "input": "node_modules/ionic4-auto-complete/assets/",
                 "output": "./assets/"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
               }
+
             ],
             "styles": [
               {
