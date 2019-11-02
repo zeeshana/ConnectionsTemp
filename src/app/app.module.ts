@@ -11,15 +11,16 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { environment } from '../environments/environment';
 
-import {FirebaseUIModule, firebase, firebaseui} from 'firebaseui-angular';
-
 import { AuthService } from './services/auth.service';
 
 import { IonicStorageModule } from '@ionic/storage';
 
 import { AddskillPageModule } from './modals/addskill/addskill.module';
-
 import { AddskillPage } from './modals/addskill/addskill.page';
+
+import { EditProfilePageModule } from './modals/edit-profile/edit-profile.module';
+import { EditProfilePage } from './modals/edit-profile/edit-profile.page';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -40,7 +41,8 @@ export function LanguageLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
-    AddskillPage
+    AddskillPage,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ export function LanguageLoader(http: HttpClient) {
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     AddskillPageModule,
+    EditProfilePageModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -56,7 +59,7 @@ export function LanguageLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    GoogleChartsModule.forRoot()
+    GoogleChartsModule.forRoot(),
   ],
   providers: [
     StatusBar,

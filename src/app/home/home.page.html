@@ -11,14 +11,23 @@
   
 <ion-content>
   
-  <div class="max-w-4xl mx-auto flex flex-col" >
-    <div class="flex-1 mt-4">
-      <div class="border-b-2 p-3 md:flex" *ngFor="let p of people">
-        <img src="https://avatars.io/twitter/{{p?.attributes.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
-        <div class="person-info ">
-          <a class="person-name font-bold text-3xl" routerLink="/{{p?.attributes.handle}}" routerDirection="forward">
-            {{p?.attributes.name}}
-          </a>
+  <div class="max-w-3xl mx-auto" >
+    <div class="flex-1 mt-4 px-4">
+      <div class="w-full border-b-2 p-3 flex flex-col items-center md:flex-row md:items-start " *ngFor="let p of people">
+        <div class="person-photo">
+        <a routerLink="/{{p?.attributes.handle}}" routerDirection="forward" class="">
+          <img src="https://avatars.io/twitter/{{p?.attributes.handle}}" class="h-32 w-32 rounded-full " /> <!-- TODO: Save the image locally when signing up first time or logging in-->
+        </a>
+      </div>
+        <div class="person-info flex-1 md:ml-3">
+          <div class="person-header" class="flex flex-row items-center">
+            <div class="person-header-name" class="flex-1">
+            <a class="person-name font-bold text-3xl" routerLink="/{{p?.attributes.handle}}" routerDirection="forward">
+              {{p?.attributes.name}}
+            </a>
+            </div>
+            <a href="/message" class="px-4 py-2 border-2 border-black rounded font-bold">Message</a>
+          </div>
           <div class="person-social">
             <a routerLink="/{{p?.attributes.handle}}" routerDirection="forward" class="mr-2 text-gray-600">@{{p?.attributes.handle}}</a>
             <a href="http://{{p?.attributes.website}}" class="text-gray-600">
@@ -33,11 +42,15 @@
             follows
           </div> -->
           <div class="person-skills mt-2">
-            <span class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700">react</span> 
-            <span class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700">java</span> 
-            <span class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700">uiux</span> 
-            <span class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700">angular</span> 
-            <span class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700">javascript</span> 
+            
+            <!-- <span *ngFor="let skill of p.attributes.skills" class="rounded-full border border-black pb-1 px-2 mr-1 text-sm">
+              {{skill?.attributes.name}} · {{skill?.attributes.durationMonths}}
+            </span> -->
+
+            <span *ngFor="let skill of p.attributes.skills" class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700 text-sm">
+                {{skill?.attributes.name}} · {{skill?.attributes.durationMonths}}
+              </span>
+
           </div>
         </div>
       </div>

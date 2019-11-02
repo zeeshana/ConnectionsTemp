@@ -1,0 +1,84 @@
+{
+	"objectId": "L3IlUSEfYV",
+	"dob": {
+		"__type": "Date",
+		"iso": "2019-10-24T15:52:00.015Z"
+	},
+	"joined": {
+		"__type": "Date",
+		"iso": "2019-10-24T15:52:00.016Z"
+	},
+	"handle": "naval",
+	"name": "Naval",
+	"tagline": "Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero.",
+	"website": "theangelphilosopher.com",
+	"website_short_url": "https://t.co/7h5Bg4SvC6?amp=1",
+	"email": "naval@naval.com",
+	"location": "Here",
+	"photo": "https://avatars.io/twitter/naval",
+	"accessToken": "",
+	"providerId": "Twitter",
+	"secret": "Twitter",
+	"signInMethod": "",
+	"uid": "12344556788",
+	"publishedProfile": true,
+	"role": "user",
+	"createdAt": "2019-10-24T15:52:00.354Z",
+	"updatedAt": "2019-10-25T12:35:36.307Z",
+	"skills": [
+	  {
+	    "name": "Java",
+	    "duration": [
+	      {
+	        "startDate": {
+		        "__type": "Date",
+		        "iso": "2011-10-24T15:52:00.016Z"
+	        },
+	        "endDate": {
+		        "__type": "Date",
+		        "iso": "2012-10-24T15:52:00.016Z"
+	        },
+	        "durationMonths": 12
+	      },
+	      {
+	        "startDate": {
+		        "__type": "Date",
+		        "iso": "2017-10-24T15:52:00.016Z"
+	        },
+	        "endDate": {
+		        "__type": "Date",
+		        "iso": "2018-10-24T15:52:00.016Z"
+	        },
+	        "durationMonths": 12
+	      }
+	     ]
+	  },
+	  {
+	    "name": "Java",
+	    "duration": [
+	      {
+	        "startDate": {
+		        "__type": "Date",
+		        "iso": "2011-10-24T15:52:00.016Z"
+	        },
+	        "endDate": {
+		        "__type": "Date",
+		        "iso": "2012-10-24T15:52:00.016Z"
+	        },
+	        "durationMonths": 12
+	      },
+	      {
+	        "startDate": {
+		        "__type": "Date",
+		        "iso": "2017-10-24T15:52:00.016Z"
+	        },
+	        "endDate": {
+		        "__type": "Date",
+		        "iso": "2018-10-24T15:52:00.016Z"
+	        },
+	        "durationMonths": 12
+	      }
+	     ]
+	  } 
+	 ]
+}

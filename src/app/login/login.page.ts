@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   private person: any;
   constructor(private authService: AuthService,
     private sessionService: SessionService, 
-    private activatedRoute: ActivatedRoute,private navCtrl: NavController, private storage: Storage,
+    private activatedRoute: ActivatedRoute,public navCtrl: NavController, private storage: Storage,
     private dbService: DBService) {
       
       this.activatedRoute.queryParams.subscribe(params => {
@@ -38,25 +38,38 @@ export class LoginPage implements OnInit {
    ngOnInit() {}
   saveAccessToken(oauthToken: string, oauthVerifier: string) {
     this.sessionService.saveAccessToken(oauthToken, oauthVerifier).subscribe(res => {
-    alert('Token saved');
+    //alert('Token saved');
+      console.log(res);
+      const reuslt = JSON.stringify(res)   ;
+      const reusltJson = JSON.parse(reuslt)   ;
+      //TODO: check status code here
+      if(reusltJson.token)
+      {
+          this.logIn(reusltJson.username,reusltJson.token);
+      }
+
+
+
     })
   }
 
+ 
+  async logIn(username:String, token:String) {
+
+  if(await this.authService.logIn(username,token))
+  {
+    this.navCtrl.navigateForward('/profile');
+  }
+  else
+  {
+    console.log('Authentication Error');
+  }
+
+}
   logInWithTwitter() {
-    
     this.sessionService.getRedirectUrl().subscribe((res: any) => {
       location.href = res.redirectUrl;
     })
-
-    
-    /*
-    const tw = new LoginWithTwitter({
-      consumerKey: 'H4tX5qvfKJP3Vzee9NyV3B405',
-      consumerSecret: 'Sa1JL41MHS4fBRj7PWtergE6hvAIn441Tbzx9ZHlYjeNgXu0I1',
-      callbackUrl: 'https://example.com/twitter/callback'
-    })
-*/
-
   }
 
 }

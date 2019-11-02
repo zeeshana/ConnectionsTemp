@@ -20,11 +20,26 @@ export class DBService {
     
   }
 
+
+  updateProfile(personToUpdate) {
+    console.log(personToUpdate);
+    var person = new this.Person();
+    person.set("objectId", personToUpdate.objectId);
+    person.set("name", personToUpdate.name);
+    person.set("tagline", personToUpdate.tagline);
+    person.set("website", personToUpdate.website);
+    person.set("location", personToUpdate.location);
+    person.save().then( result => {
+      console.log(result);
+    });
+
+  }
+
   addPersonDummy() {
 
     var person = new this.Person();
-    person.set("handle", "Naval");
-    person.set("name", "naval");
+    person.set("handle", "naval");
+    person.set("name", "Naval");
     person.set("tagline", "Vitam impendere vero.");
     person.set("website", "theangelphilosopher.com");
     person.set("website_short_url", "https://t.co/7h5Bg4SvC6?amp=1");
@@ -41,37 +56,95 @@ export class DBService {
     person.set("publishedProfile", true);
     person.set("role", "user");
     
-    person.save().then((install) => {
-      return "ok";
-    }, (install, error) => {
-      return "fail"
-    });
+    const Skill = Parse.Object.extend("Skill");
+    const skillJava = new Skill();
+    skillJava.set("name", "Java");
+
+    const skillAngular = new Skill();
+    skillAngular.set("name", "Angular");
+
+    const Duration = Parse.Object.extend("Duration");
+    const durationJava1 = new Duration();
+    durationJava1.set("startDate", new Date());
+    durationJava1.set("endDate", new Date());
+
+    const durationJava2 = new Duration();
+    durationJava2.set("startDate", new Date());
+    durationJava2.set("endDate", new Date());
+
+    const durationJava3 = new Duration();
+    durationJava3.set("startDate", new Date());
+    durationJava3.set("endDate", new Date());
+
+    durationJava1.save().then( (install) => {
+      
+      durationJava2.save().then( (install) => {
+        console.log(install);
+      } );
+
+      durationJava3.save().then( (install) => {
+        const durations = new Array();
+        durations.push(durationJava1);
+        durations.push(durationJava2);
+        durations.push(durationJava3);
+    
+        const durations2 = new Array();
+        durations2.push(durationJava1);
+        durations2.push(durationJava2);
+        durations2.push(durationJava3);
+
+        skillJava.set("durations", durations);
+        skillJava.set("durationMonths", 24);
+        skillAngular.set("durations", durations2);
+        skillAngular.set("durationMonths", 24);
+
+
+        skillJava.save().then( (install) => {
+          console.log(install);
+        } );
+        
+        skillAngular.save().then( (install) => {
+          console.log(install);
+        } );
+    
+        const skillsArray = new Array();
+        skillsArray.push(skillJava);
+        skillsArray.push(skillAngular);
+    
+        person.set("skills", skillsArray);
+    
+    
+        person.save().then((install) => {
+          return "ok";
+        }, (install, error) => {
+          return "fail"
+        });
+
+
+      } );
+
+
+    } );
+
 
   }
 
-  public getPeople():Observable<any[]> {
-    const query = new Parse.Query(this.Person); 
-    query.find().then( result => {
-      return this.observer.next(result);
-    });
-
-    return new Observable(observer => { this.observer = observer});
-
+  async getPeople(){
+    var query = new Parse.Query(this.Person); 
+    query.include("skills");
+    return await query.find()
   } 
 
- 
-
-  public getPerson(key: string, value: string):Observable<any> {
+   async getPerson(key: string, value: string) {
     const query = new Parse.Query(this.Person); 
     query.equalTo(key, value);
-    
-    query.find().then( result => {
-      console.log(result.length);
-      return this.observer.next(result);
-    });
+    const result = await query.first();
+    return result;  
+   
+  }
 
-    return new Observable(observer => { this.observer = observer});
-
+  logIn(username:String, token:String) {
+    return Parse.User.logIn(username, token);
   }
 
 }

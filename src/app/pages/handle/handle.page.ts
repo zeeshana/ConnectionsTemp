@@ -9,6 +9,8 @@ import { Chart } from 'chart.js';
 
 
 
+
+
 @Component({
   selector: 'app-handle',
   templateUrl: './handle.page.html',
@@ -19,19 +21,105 @@ export class HandlePage implements OnInit {
 
   bars: any;
   colorArray: any;
-  private user: any;
-  
+  private person: any;
+  labels = [];
 
+  private personx = {
+    "objectId": "L3IlUSEfYV",
+    "dob": {
+      "__type": "Date",
+      "iso": "2019-10-24T15:52:00.015Z"
+    },
+    "joined": {
+      "__type": "Date",
+      "iso": "2019-10-24T15:52:00.016Z"
+    },
+    "handle": "naval",
+    "name": "Naval",
+    "tagline": "Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero. Vitam impendere vero.",
+    "website": "theangelphilosopher.com",
+    "website_short_url": "https://t.co/7h5Bg4SvC6?amp=1",
+    "email": "naval@naval.com",
+    "location": "Here",
+    "photo": "https://avatars.io/twitter/naval",
+    "accessToken": "",
+    "providerId": "Twitter",
+    "secret": "Twitter",
+    "signInMethod": "",
+    "uid": "12344556788",
+    "publishedProfile": true,
+    "role": "user",
+    "createdAt": "2019-10-24T15:52:00.354Z",
+    "updatedAt": "2019-10-25T12:35:36.307Z",
+    "skills": [
+      {
+        "name": "Java",
+        "durations": [
+          {
+            "startDate": {
+              "__type": "Date",
+              "iso": "2011-10-24T15:52:00.016Z"
+            },
+            "endDate": {
+              "__type": "Date",
+              "iso": "2012-10-24T15:52:00.016Z"
+            },
+            "durationMonths": 12
+          },
+          {
+            "startDate": {
+              "__type": "Date",
+              "iso": "2017-10-24T15:52:00.016Z"
+            },
+            "endDate": {
+              "__type": "Date",
+              "iso": "2018-10-24T15:52:00.016Z"
+            },
+            "durationMonths": 12
+          }
+         ]
+      },
+      {
+        "name": "Angular",
+        "durations": [
+          {
+            "startDate": {
+              "__type": "Date",
+              "iso": "2008-10-24T15:52:00.016Z"
+            },
+            "endDate": {
+              "__type": "Date",
+              "iso": "2009-10-24T15:52:00.016Z"
+            },
+            "durationMonths": 12
+          },
+          {
+            "startDate": {
+              "__type": "Date",
+              "iso": "2013-10-24T15:52:00.016Z"
+            },
+            "endDate": {
+              "__type": "Date",
+              "iso": "2019-10-24T15:52:00.016Z"
+            },
+            "durationMonths": 12
+          }
+         ]
+      } 
+     ]
+  }
+  
 
   constructor(private dbService: DBService, private activateRoute: ActivatedRoute) { }
 
 
   ngOnInit() {
+
     this.activateRoute.params.subscribe( params => {
-      this.dbService.getPerson('handle', params.handle).subscribe( result => {   
-        console.log (result);
-        this.user = result[0];
-       }); 
+      this.dbService.getPerson('handle', params.handle).then( result => {
+        this.person = result[0];
+        this.createBarChart();
+      });
     });
     
 
@@ -43,109 +131,67 @@ export class HandlePage implements OnInit {
     }); */ 
   }
 
-  ionViewDidEnter() {
-    this.createBarChart();
-  }
 
+  getLabelFunction = function getLabel(value) {
+    console.log(this.labels);
+ }
 
   createBarChart() {
+    
+    let datasets = [];
+    // transform skills to dataset
+    let skills = this.person.attributes.skills;
+    
+    
+    for(let i=0; i<skills.length; i++) {
+      
+      let durations = skills[i].attributes.durations;
+     
+      this.labels.push( skills[i].attributes.name );
+      
+      for(let j=0; j<durations.length; j++) {
+
+        console.log( durations[j].attributes.startDate.toISOString() );
+        
+        let dataset = {
+          label: skills[i].attributes.name,
+          backgroundColor: "#ff4742",
+          borderColor: "#ff4742",
+          fill: false,
+          borderWidth : 20,
+          pointRadius : 0,
+          data: [
+              {
+               
+                x: new Date( durations[j].attributes.startDate.toISOString() ),
+                y: i+1
+              }, {
+                x: new Date( durations[j].attributes.endDate.toISOString() ),
+                y: i+1
+              },
+          ]
+        };
+
+        datasets.push( dataset );
+
+       
+
+      }
+    }
+
     this.bars = new Chart(this.barChart.nativeElement, {
+      
       type: 'line',
       data: {
          
-          datasets: [
-          {
-              label: "React",
-              backgroundColor: "#90cdf4",
-              borderColor: "#90cdf4",
-              fill: false,
-              borderWidth : 15,
-              pointRadius : 0,
-              data: [
-                  {
-                    x: new Date("2010-3-25 13:2"),
-                      y: 1
-                  }, {
-                    x: new Date("2019-09-25 13:2"),
-                      y: 1
-                  },
-              ]
-          },
-          {
-            label: "Java",
-              backgroundColor: "#90cdf4",
-              borderColor: "#90cdf4",
-              fill: false, 
-              borderWidth : 15,
-              pointRadius : 0,
-              data: [
-                  {
-                      x: new Date("2015-3-25 13:2"),
-                      y: 2
-                  }, {
-                    x: new Date("2018-3-25 13:2"),
-                      y: 2
-                  }
-              ]
-          },
-          {
+          datasets: datasets
 
-            label: "Jone",
-              backgroundColor: "#90cdf4",
-              borderColor: "#90cdf4",
-              fill: false,
-              borderWidth : 15,
-              pointRadius : 0,
-              data: [
-                  {
-                    x: new Date("2019-3-25 13:2"),
-                      y: 3
-                  }, {
-                    x: new Date("2019-6-25 13:2"),
-                      y: 3
-                  }
-              ]
-          },
-          {
-            label: "Jone",
-              backgroundColor: "#90cdf4",
-              borderColor: "#90cdf4",
-              fill: false,
-              borderWidth : 15,
-              pointRadius : 0,
-              data: [
-                  {
-                    x: new Date("2013-3-25 13:2"),
-                      y: 4
-                  }, {
-                    x: new Date("2014-3-25 13:2"),
-                      y: 4
-                  }
-              ]
-          },
-          {
-            label: "Jone",
-              backgroundColor: "#90cdf4",
-              borderColor: "#90cdf4",
-              fill: false,
-              borderWidth : 15,
-              pointRadius : 0,
-              data: [
-                  {
-                    x: new Date("2013-3-25 13:2"),
-                      y: 4
-                  }, {
-                    x: new Date("2019-3-25 13:2"),
-                      y: 4
-                  }
-              ]
-          }
-          ]
       },
       options: {
           legend: {
             display: false
           },
+          animation: false,
           scales: {
               xAxes: [{
                   type: 'time',
@@ -162,7 +208,8 @@ export class HandlePage implements OnInit {
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
                       steps: 0.5,
-                }
+                },
+                // gridLines: { color: "rgba(0, 0, 0, 0)", }
               }],
               yAxes : [{
                   scaleLabel : {
@@ -174,15 +221,20 @@ export class HandlePage implements OnInit {
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
                       callback: function(value) {
-                        if(value == 4) { return "Angular" } // Bring these values from an array/map {3: "Java"}
-                        if(value == 3) { return "UI/UX" } // Bring these values from an array/map {3: "Java"}
-                        if(value == 2) { return "React" } // Bring these values from an array/map {3: "Java"}
-                        if(value == 1) { return "Java" } // Bring these values from an array/map {3: "Java"}
+                        //return this.labels[value-1];
+                        if(value == 1) {
+                          return "Java";
+                        } 
+                        if (value == 2) {
+                          return "Angular";
+                        }
+                        //return value;
                         return "";
                       },
                       stepSize: 1,
-                      max: 5
-                  }
+                      max: 3
+                  },
+                  // gridLines: { color: "rgba(0, 0, 0, 0)", }
               }]
           }
       }

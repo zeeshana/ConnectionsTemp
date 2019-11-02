@@ -3,68 +3,107 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title> 
+    <ion-title>
       Profile
     </ion-title>
   </ion-toolbar>
 </ion-header>
-  
 
 <ion-content>
-    <div class="max-w-4xl mx-auto flex flex-col">
-        <div class="flex-1 mt-4  pr-4 pl-4">
-            
-            <div class="md:flex">
-               
-                <img src="https://avatars.io/twitter/{{user?.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
-                <div class="person-info ">
-                  <a class="person-name font-bold text-3xl" href="/@{{user?.handle}}">
-                    {{user?.name}}
-                  </a>
-                  <div class="person-social">
-                    <a href="/@{{user?.handle}}" class="mr-2 text-gray-600">@{{user?.handle}}</a>
-                    <a href="http://{{user?.website}}" class="text-gray-600">
-                        <svg class="inline" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10" stroke="#4a5568" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg> 
-                        {{user?.website}}
-                    </a> 
-                  </div>
-                  <div class="person-tagline mt-2">
-                    {{user?.tagline}}
-                  </div>
-                  <!--<div class="person-follows">
-                    follows
-                  </div> -->
-                  
-                </div>
-              </div>
+  <div class="max-w-3xl mx-auto">
+    <div class="flex-1 mt-4 px-4">
+      <div
+        class="w-full border-b-2 p-3 flex flex-col items-center md:flex-row md:items-start "
+      >
+        <img
+          src="https://avatars.io/twitter/{{ user?.handle }}"
+          class="h-32 w-32 rounded-full"/>
+        <!-- TODO: Save the image locally when signing up first time or logging in-->
 
-            
-            
-           
-
-        </div>
-
-        
-            <!-- <div class="person-skills mt-2 pt-4 pr-4 pl-4 text-gray-600 flex-1">
-                Your profile picture is linked to your Twitter account. 
-            </div> -->
-            <div class="flex-1 mt-4 pr-4 pl-4">
-            
-              <div class="text-3xl"> <span class="font-bold">Your Skills</span></div>
-              <div> 
-                You have not added any professional skills or experience under your profile. Start by searching and adding your first skill.
-              </div>
-              <div class="mt-2">
-                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="presentAddSkillModal()">
-                      Add your first skill
-                  </button>
-              </div>
-
-              <div class="mt-2">
-              </div>
-
+        <div class="person-info flex-1 md:ml-3">
+          <div class="person-header" class="flex flex-row items-center">
+            <div class="person-header-name" class="flex-1 mr-4">
+              <a
+                class="person-name font-bold text-3xl"
+                routerLink="/{{ user?.handle }}"
+                routerDirection="forward"
+              >
+                {{ user?.name }}
+              </a>
             </div>
-          
+            <a
+              class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer" (click)="presenteditProfileModal()"
+              >Edit Profile</a>
+          </div>
+          <div class="person-social">
+            <a
+              routerLink="/{{ user?.handle }}"
+              routerDirection="forward"
+              class="mr-2 text-gray-600"
+              >@{{ user?.handle }}</a
+            >
+            <a
+              href="http://{{ user?.website }}"
+              class="text-gray-600"
+            >
+              <svg
+                class="inline"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10"
+                  stroke="#4a5568"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              {{ user?.website }}
+            </a>
+          </div>
+          <div class="person-tagline mt-2">
+            {{ user?.tagline }}
+          </div>
+          <!--<div class="person-follows">
+                follows
+              </div> -->
+
+          <div class="person-skills mt-2">
+            <!-- <span *ngFor="let skill of p.skills" class="rounded-full border border-black pb-1 px-2 mr-1 text-sm">
+                  {{skill?.name}} · {{skill?.durationMonths}}
+                </span> -->
+
+            <span
+              *ngFor="let skill of user?.skills"
+              class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700 text-sm"
+            >
+              {{ skill?.name }} ·
+              {{ skill?.durationMonths }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="person-skills mt-2 pt-4 pr-4 pl-4 text-gray-600 flex-1">
+            Your profile picture is linked to your Twitter account. 
+        </div> -->
+    <div class="flex-1 mt-8 pr-4 pl-4">
+      <div  class="flex flex-row items-center">
+        <div class="font-bold flex-1 text-2xl">Skills Experience</div>
+        <div>
+            <a class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer" (click)="presentAddSkillModal()">
+              Edit Skills
+            </a>
+          </div>
       </div>
 
+      <div class="w-full mt-4">
+        <canvas #barChart></canvas>
+      </div>
+    </div>
+  </div>
 </ion-content>

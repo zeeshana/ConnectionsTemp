@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="end">
+          <ion-button (click)="dismissModal()">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        
+    <ion-title>Edit Profile </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="max-w-3xl mx-auto">
+      
+      <form>
+
+        <div class="mt-4">
+            <img
+            src="https://avatars.io/twitter/{{ user?.handle }}"
+            class="h-32 w-32 rounded-full"/>
+
+            <ion-item>
+                <ion-label class="font-semibold" position="fixed">Name</ion-label>
+                <ion-input
+                  placeholder="Add your name"
+                  [(ngModel)]="user.name"
+                  name="name"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label class="font-semibold" position="fixed">Bio</ion-label>
+                  <ion-textarea
+                    placeholder="Add a bio to your profile"
+                    [(ngModel)]="user.tagline"
+                    name="tagline"
+                    rows="3"
+                  ></ion-textarea>
+                </ion-item>
+
+              
+                <ion-item>
+                    <ion-label class="font-semibold" position="fixed">Location</ion-label>
+                    <ion-input
+                      placeholder="Add your location"
+                      [(ngModel)]="user.location"
+                      name="location"
+                    ></ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label class="font-semibold" position="fixed">Website</ion-label>
+                      <ion-input
+                        placeholder="Add your website"
+                        [(ngModel)]="user.website"
+                        name="website"
+                      ></ion-input>
+                    </ion-item>
+                  
+                    
+                    <div class="w-full mt-8 text-center">
+                    <a class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer w-full" (click)="saveAndDismisModal()">Save</a>
+                  </div>
+        </div>
+      
+      </form>
+
+    </div>
+
+</ion-content>

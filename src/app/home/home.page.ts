@@ -20,15 +20,15 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.dbService.getPeople().subscribe( result => {   
-      this.people = result;
-      this.random = [1, 2, 3];
-     }); 
-    
+  
   }
 
   ionViewDidEnter() {
-  
+     
+    this.dbService.getPeople().then( result => {
+      this.people = result;
+    }).catch(error =>{console.log('Get people : ' + error)});
+    
    
   }
 }

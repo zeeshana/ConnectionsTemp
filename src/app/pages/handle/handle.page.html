@@ -4,35 +4,59 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title> 
-      Profile
+      {{person?.attributes.name}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
   
 
 <ion-content>
-    <div class="max-w-4xl mx-auto flex flex-col">
-        <div class="flex-1 mt-4  pr-4 pl-4">
+    <div class="max-w-3xl mx-auto" >
+        <div class="flex-1 mt-4 px-4">
             
-            <div class="md:flex">
-               
-                <img src="https://avatars.io/twitter/{{user?.attributes.handle}}" class="h-32 w-32 rounded-full mr-6"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
-                <div class="person-info ">
-                  <div class="person-name font-bold text-3xl">
-                    {{user?.attributes.name}}
+
+            <div class="w-full border-b-2 p-3 flex flex-col items-center md:flex-row md:items-start ">
+                
+                <img src="https://avatars.io/twitter/{{person?.attributes.handle}}" class="h-32 w-32 rounded-full"/> <!-- TODO: Save the image locally when signing up first time or logging in-->
+                
+                <div class="person-info flex-1 md:ml-3">
+                  <div class="person-header" class="flex flex-row items-center">
+                    <div class="person-header-name" class="flex-1">
+                    <a class="person-name font-bold text-3xl" routerLink="/{{person?.attributes.handle}}" routerDirection="forward">
+                      {{person?.attributes.name}}
+                    </a>
+                    </div>
+                    <a href="/message" class="px-4 py-2 border-2 border-black rounded font-bold">Message</a>
                   </div>
                   <div class="person-social">
-                    <div class="mr-2 text-gray-600">@{{user?.attributes.handle}}</div>
-                    <a href="http://{{user?.attributes.website}}" class="text-gray-600">
+                    <a routerLink="/{{person?.attributes.handle}}" routerDirection="forward" class="mr-2 text-gray-600">@{{person?.attributes.handle}}</a>
+                    <a href="http://{{person?.attributes.website}}" class="text-gray-600">
                         <svg class="inline" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10" stroke="#4a5568" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg> 
-                        {{user?.attributes.website}}
+                        {{person?.attributes.website}}
                     </a> 
                   </div>
                   <div class="person-tagline mt-2">
-                    {{user?.attributes.tagline}}
+                    {{person?.attributes.tagline}}
                   </div>
+                  <!--<div class="person-follows">
+                    follows
+                  </div> -->
+
+                  <div class="person-skills mt-2">
+            
+                    <!-- <span *ngFor="let skill of p.attributes.skills" class="rounded-full border border-black pb-1 px-2 mr-1 text-sm">
+                      {{skill?.attributes.name}} · {{skill?.attributes.durationMonths}}
+                    </span> -->
+        
+                    <span *ngFor="let skill of person?.attributes.skills" class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700 text-sm">
+                      {{skill.attributes.name}} · {{skill.attributes.durationMonths}}
+                      </span>
+        
+                  </div>
+                  
                 </div>
               </div>
+
 
         </div>
 

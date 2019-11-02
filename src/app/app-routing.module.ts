@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'addskill', loadChildren: './modals/addskill/addskill.module#AddskillPageModule' },
-  { path: ':handle', loadChildren: './pages/handle/handle.module#HandlePageModule' }
+  { path: ':handle', loadChildren: './pages/handle/handle.module#HandlePageModule' },
+  { path: 'edit-profile', loadChildren: './modals/edit-profile/edit-profile.module#EditProfilePageModule' }
 ];
 
 @NgModule({
