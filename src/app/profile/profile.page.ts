@@ -17,9 +17,7 @@ import { EditProfilePage } from '../modals/edit-profile/edit-profile.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
-  }
+  ngOnInit(){}
 
   @ViewChild('barChart', {static: true}) barChart;
 
