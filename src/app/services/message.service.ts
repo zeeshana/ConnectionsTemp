@@ -123,7 +123,7 @@ currentChatMessagePageSize = 10;
   {
     console.log("!!!!!!!!!!!!!         5          !!!!!!!!!!!!!!")
     //console.log("MessageService : initMessageSubscriptionGlobal");
-
+    this.currentPerson = await this.authService.getLoginUser();
     var personPointer = {
       __type: 'Pointer',
       className: 'Person',
