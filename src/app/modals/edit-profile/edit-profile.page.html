@@ -13,55 +13,84 @@
 <ion-content>
     <div class="max-w-3xl mx-auto">
       
-      <form>
+      <form [formGroup]="formGroup">
 
-        <div class="mt-4">
+        <div class="mt-4" class="flex flex-col items-center w-full">
+          <div class="mt-4">
             <img
             src="https://avatars.io/twitter/{{ user?.handle }}"
             class="h-32 w-32 rounded-full"/>
-
+          </div>
+          <div class="w-full">
             <ion-item>
-                <ion-label class="font-semibold" position="fixed">Name</ion-label>
+                <ion-label class="font-medium" position="fixed">Name</ion-label>
                 <ion-input
                   placeholder="Add your name"
-                  [(ngModel)]="user.name"
+                  formControlName="name" type="text"
                   name="name"
                 ></ion-input>
               </ion-item>
+              <div *ngIf="!formGroup.controls.name.valid  && (formGroup.controls.name.dirty || submitAttempt)" 
+                class="text-red-600 text-sm pl-2">
+                  Name cannot be empty or more than 50 characters.
+              </div>
+              
+
 
               <ion-item>
-                  <ion-label class="font-semibold" position="fixed">Bio</ion-label>
+                  <ion-label class="font-medium" position="fixed">Bio</ion-label>
                   <ion-textarea
                     placeholder="Add a bio to your profile"
-                    [(ngModel)]="user.tagline"
                     name="tagline"
+                    formControlName="tagline"
                     rows="3"
                   ></ion-textarea>
                 </ion-item>
 
+                <div *ngIf="!formGroup.controls.tagline.valid  && (formGroup.controls.tagline.dirty || submitAttempt)" 
+                class="text-red-600 text-sm pl-2">
+                  Must be 160 characters or fewer.
+              </div>
+                
+
               
                 <ion-item>
-                    <ion-label class="font-semibold" position="fixed">Location</ion-label>
+                    <ion-label class="font-medium" position="fixed">Location</ion-label>
                     <ion-input
                       placeholder="Add your location"
-                      [(ngModel)]="user.location"
+                      formControlName="location" type="text"
                       name="location"
                     ></ion-input>
                   </ion-item>
 
+                  <div *ngIf="!formGroup.controls.location.valid  && (formGroup.controls.location.dirty || submitAttempt)" 
+                class="text-red-600 text-sm pl-2">
+                  Must be 30 characters or fewer.
+              </div>
+
                   <ion-item>
-                      <ion-label class="font-semibold" position="fixed">Website</ion-label>
+                      <ion-label class="font-medium" position="fixed">Website</ion-label>
                       <ion-input
                         placeholder="Add your website"
-                        [(ngModel)]="user.website"
+                        formControlName="website" type="text"
                         name="website"
                       ></ion-input>
                     </ion-item>
+
+                    
+                  <div *ngIf="!formGroup.controls.website.valid  && (formGroup.controls.website.dirty || submitAttempt)" 
+                  class="text-red-600 text-sm pl-2">
+                   Your website must be a valid URL.
+                </div>
                   
                     
                     <div class="w-full mt-8 text-center">
-                    <a class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer w-full" (click)="saveAndDismisModal()">Save</a>
+                    
+                    <a class="px-4 py-2 border-2 border-green-500 bg-green-500 text-white rounded font-bold cursor-pointer rounded-full" (click)="saveAndDismisModal()">
+                        Save
+                      </a>
                   </div>
+                </div>
         </div>
       
       </form>

@@ -72,6 +72,14 @@ export class AuthService {
     }
   }
 
+  setLoggedInUser(person)
+  {
+    
+    const authUser = JSON.parse(localStorage.getItem("tryConnectinosAuth"));
+    authUser.person = person;
+    this.setLoginUser(authUser);
+  }
+
   async setAuthStatus()
   {
     const person = this.getLoginUser();
@@ -94,7 +102,9 @@ export class AuthService {
   logout()
   {
     console.log('logout');
+    this.dbService.logOut();
     this.authStatus.next(null);
     localStorage.setItem('tryConnectinosAuth', null);
+    
   }
 }

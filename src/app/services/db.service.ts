@@ -3,6 +3,8 @@ import { Observable, Observer } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
 import Parse from 'parse';
+import { AuthService } from './auth.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,27 +12,52 @@ import Parse from 'parse';
 export class DBService {
   
   private Person = Parse.Object.extend("Person");
+  private MessageRef = Parse.Object.extend("MessageRef");
+  private Skill = Parse.Object.extend("Skill");
   private people: any;
   observer: Observer<any>;
 
   constructor() {
     
     Parse.initialize("z5etbrSgUBGg93mKcmWajXsAU2eDHLkO0Zrsoolb", "X5BDbzZUvn7MmFwyZnQOpB1zwR1WuTGtG10AK9h8");
-    Parse.serverURL = 'https://parseapi.back4app.com/';
+    Parse.serverURL = 'https://tryconnections.back4app.io';
     
   }
 
 
-  updateProfile(personToUpdate) {
+  async updateProfile(personToUpdate) {
     console.log(personToUpdate);
     var person = new this.Person();
+    console.log(personToUpdate);
     person.set("objectId", personToUpdate.objectId);
     person.set("name", personToUpdate.name);
     person.set("tagline", personToUpdate.tagline);
     person.set("website", personToUpdate.website);
     person.set("location", personToUpdate.location);
+    
+    const skillsArray = new Array();
+
+    if (personToUpdate.skills != null && personToUpdate.skills.length>0 ) {
+      for(let i=0; i<personToUpdate.skills.length; i++) {
+
+        const skill = new this.Skill();
+        skill.set('name', personToUpdate.skills[i].name);
+        skill.set('startDuration', personToUpdate.skills[i].startDuration );
+        skill.set('endDuration', personToUpdate.skills[i].endDuration );
+        skill.set('duration', personToUpdate.skills[i].duration );
+        console.log( personToUpdate.skills[i] );
+        skillsArray.push(skill);
+      }
+  
+      
+    } else {
+
+    }
+    
+    person.set('skills', skillsArray);
+
     person.save().then( result => {
-      console.log(result);
+      return result;
     });
 
   }
@@ -126,7 +153,7 @@ export class DBService {
 
     } );
 
-
+ 
   }
 
   async getPeople(){
@@ -136,15 +163,23 @@ export class DBService {
   } 
 
    async getPerson(key: string, value: string) {
-    const query = new Parse.Query(this.Person); 
+    const query = new Parse.Query(this.Person);
     query.equalTo(key, value);
     const result = await query.first();
     return result;  
-   
   }
 
   logIn(username:String, token:String) {
     return Parse.User.logIn(username, token);
   }
 
+  logOut() {
+    return Parse.User.logOut();
+  }
+
+
+  getParseObject()
+  {
+    return Parse;
+  }
 }

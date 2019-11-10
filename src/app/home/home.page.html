@@ -19,18 +19,18 @@
           <img src="https://avatars.io/twitter/{{p?.attributes.handle}}" class="h-32 w-32 rounded-full " /> <!-- TODO: Save the image locally when signing up first time or logging in-->
         </a>
       </div>
-        <div class="person-info flex-1 md:ml-3">
+      <div class="person-info flex-1 md:ml-3 w-full">
           <div class="person-header" class="flex flex-row items-center">
             <div class="person-header-name" class="flex-1">
             <a class="person-name font-bold text-3xl" routerLink="/{{p?.attributes.handle}}" routerDirection="forward">
               {{p?.attributes.name}}
             </a>
             </div>
-            <a href="/message" class="px-4 py-2 border-2 border-black rounded font-bold">Message</a>
+            <a routerLink="/message/{{p?.attributes.handle}}" class="px-4 py-2 border-2 border-black rounded font-bold">Message</a>
           </div>
           <div class="person-social">
             <a routerLink="/{{p?.attributes.handle}}" routerDirection="forward" class="mr-2 text-gray-600">@{{p?.attributes.handle}}</a>
-            <a href="http://{{p?.attributes.website}}" class="text-gray-600">
+            <a *ngIf="p?.attributes.website != null" href="http://{{p?.attributes.website}}" class="text-gray-600">
                 <svg class="inline" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10" stroke="#4a5568" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg> 
                 {{p?.attributes.website}}
             </a> 

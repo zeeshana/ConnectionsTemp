@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { DBService } from 'src/app/services/db.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -14,16 +16,31 @@ export class EditProfilePage implements OnInit {
   private user: any;
   private editProfileForm;
 
-  constructor(private modalCtrl: ModalController, private storage: Storage, 
-              private dbService: DBService) { 
-    storage.get("user").then( result => {
-      this.user = JSON.parse( result );
-      console.log(this.user);
+  private formGroup: FormGroup;
+  // private formControl: FormControl;
+  private submitAttempt: boolean = false;
 
-    });
+
+
+  constructor(private modalCtrl: ModalController, private storage: Storage, 
+              private dbService: DBService, private authService: AuthService,
+              private formBuilder: FormBuilder) { 
+    this.user = authService.getLoginUser();
+
+    const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+
+    this.formGroup = formBuilder.group({
+      name: [this.user.name , Validators.compose([Validators.maxLength(50), Validators.pattern('.*'), Validators.required])],
+      tagline: [this.user.tagline, Validators.compose([Validators.maxLength(160), Validators.pattern('.*')])],
+      website: [this.user.website, Validators.compose([Validators.maxLength(100), Validators.pattern(urlRegex)])],
+      location: [this.user.location, Validators.compose([Validators.maxLength(30), Validators.pattern('.*')])]
+
+  });
+    
   }
 
   ngOnInit() {
+
   }
 
   dismissModal() {
@@ -35,26 +52,32 @@ export class EditProfilePage implements OnInit {
   }
 
   saveAndDismisModal() {
-    // Save the user object
-    console.log("inside save and dismiss modal");
-    console.log(this.user);
-    this.storage.set("user", JSON.stringify(this.user) ).then( result => {
-      // Save  this in DB now...
-      this.storage.get("user").then( result => {
-        this.user = JSON.parse( result );
-        this.dbService.updateProfile( this.user );
-        console.log(this.user);
+    this.submitAttempt = true;
+    console.log('is form valid ' + !this.formGroup.valid);
+    if(this.formGroup.valid){
+      
+      // Save the user object
+      console.log( this.formGroup.controls.name.value );
+      this.user.name = this.formGroup.controls.name.value;
+      this.user.tagline = this.formGroup.controls.tagline.value;
+      this.user.website = this.formGroup.controls.website.value;
+      this.user.location = this.formGroup.controls.location.value;
+
+      console.log( this.user );
+      this.authService.setLoggedInUser(this.user);
+      this.dbService.updateProfile( this.user ).then( result => {
         this.modalCtrl.dismiss({
           'dismissed': true
         });
-
-
       });
+
+    } else {
       
-    });
+    }
+    
+    
     
 
-    
   }
 
 }

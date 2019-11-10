@@ -5,26 +5,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EditProfilePage } from './edit-profile.page';
-
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { MessagePage } from './message.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: EditProfilePage
+    component: MessagePage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EditProfilePage]
+  declarations: [MessagePage]
 })
-export class EditProfilePageModule {}
+export class MessagePageModule {}

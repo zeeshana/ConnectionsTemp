@@ -5,12 +5,6 @@ import { Chart } from 'chart.js';
 
 
 
-
-
-
-
-
-
 @Component({
   selector: 'app-handle',
   templateUrl: './handle.page.html',
@@ -117,7 +111,9 @@ export class HandlePage implements OnInit {
 
     this.activateRoute.params.subscribe( params => {
       this.dbService.getPerson('handle', params.handle).then( result => {
-        this.person = result[0];
+        console.log('inside ngoninit');
+        console.log( result );
+        this.person = result;
         this.createBarChart();
       });
     });
@@ -131,10 +127,6 @@ export class HandlePage implements OnInit {
     }); */ 
   }
 
-
-  getLabelFunction = function getLabel(value) {
-    console.log(this.labels);
- }
 
   createBarChart() {
     
@@ -151,7 +143,7 @@ export class HandlePage implements OnInit {
       
       for(let j=0; j<durations.length; j++) {
 
-        console.log( durations[j].attributes.startDate.toISOString() );
+        // console.log( durations[j].attributes.startDate.toISOString() );
         
         let dataset = {
           label: skills[i].attributes.name,
@@ -220,16 +212,16 @@ export class HandlePage implements OnInit {
                       fontSize: 18,
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
+                      customLabels: this.labels,
+                      // labelString: "Y Axis"
                       callback: function(value) {
                         //return this.labels[value-1];
-                        if(value == 1) {
-                          return "Java";
-                        } 
-                        if (value == 2) {
-                          return "Angular";
+                        if( value > 0 && value <= this.options.ticks.customLabels.length) {
+                          return this.options.ticks.customLabels[value-1];
+                        } else {
+                          return "";
                         }
-                        //return value;
-                        return "";
+                        
                       },
                       stepSize: 1,
                       max: 3
@@ -239,5 +231,7 @@ export class HandlePage implements OnInit {
           }
       }
   });
+
+  // console.log( this.bars.options );
 }
 }

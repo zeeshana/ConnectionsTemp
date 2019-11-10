@@ -8,10 +8,10 @@ export class SessionService {
   constructor(private http: HttpClient) { }
   getRedirectUrl() {
   return this.http.get('https://tryconnectionsbackend.netlify.com/.netlify/functions/server/connect')
-  //return this.http.get('http://localhost:3000/.netlify/functions/server/connect'); 
+  //return this.http.get('http://localhost:3000/.netlify/functions/server/connect');  
 }
   saveAccessToken(oauthToken: string, oauthVerifier: string) {
     return this.http.get(`https://tryconnectionsbackend.netlify.com//.netlify/functions/server/saveAccessTokens?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`)
-    //return this.http.get(`http://localhost:3000/.netlify/functions/server/saveAccessTokens?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`);
+    // return this.http.get(`http://localhost:3000/.netlify/functions/server/saveAccessTokens?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`);
   }
 }

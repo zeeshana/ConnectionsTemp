@@ -12,64 +12,73 @@
   </ion-header>
 
 <ion-content class="ion-padding py-2">
-      <div class="mb-4 pr-12 mt-4">
-        <label class="block text-gray-700 font-bold mb-2" for="username">
-         Your skill
-        </label>
-        <input class="form-input block appearance-none w-full " id="skill" type="text" placeholder="Programming, Sales, or Marketing">
-      </div>
-      <div class="mb-4 pr-12 mt-8">
-          <label class="block text-gray-700 font-bold mb-2" for="username">
-            When did you start using <strong>[skill]</strong>?
-          </label>
-          <div class="flex flex-wrap">
-          <div class="mr-2">
-            <select class="form-select">
-              <option *ngFor="let m of months">{{m.display}}</option>
-            </select>
-            </div>
-          
-            <div class="  ">
-                <select class="form-select">
-                  <option *ngFor="let y of years" >{{y.display}}</option>
-                </select>
-                </div>
-              </div>
-                
-        </div>
 
-
-        <div class="mb-4 pr-12 mt-8">
-            <label class="block text-gray-700 font-bold mb-2" for="username">
-                When did you last use <strong>[skill]</strong>?
-            </label>
-            <div>
-                <label class="mt-3 flex items-center sm:w-1/4 sm:px-2 lg:w-1/2 xl:w-full">
-                  <input class="form-checkbox text-blue-600" type="checkbox" name="balcony">
-                  <span class="ml-2">Currently using this skill</span>
-                </label>
-            </div>
-            <div class="flex flex-wrap mt-2">
-            <div class="mr-2">
-              <select class="form-select">
-                <option *ngFor="let m of months">{{m.display}}</option>
-              </select>
+    <div class="max-w-3xl mx-auto">
+      
+        <form [formGroup]="formGroup">
+  
+          <div class="mt-4" class="flex flex-col items-center w-full">
+  
+            <div class="w-full">
+              <div class="mt-2">
+                Add a professional skill, and tell us about when did you first or last used it?
               </div>
-            
-              <div class="  ">
-                  <select class="form-select">
-                    <option *ngFor="let y of years" >{{y.display}}</option>
-                  </select>
+              <div class="mt-4">
+              <ion-item>
+                  <ion-label class="font-medium" position="fixed">Skill</ion-label>
+                  <ion-input
+                    placeholder="Add a professional skill like Customer Service"
+                    formControlName="name" type="text"
+                    name="name"
+                  ></ion-input>
+                </ion-item>
+
+                <div *ngIf="!formGroup.controls.name.valid  && (formGroup.controls.name.dirty || submitAttempt)" 
+                class="text-red-600 text-sm pl-2">
+                  Name cannot be empty or more than 50 characters.
+              </div>
+               
+                <ion-item>
+                    <ion-label class="font-medium">When did you first use this skill?</ion-label>
+                    <ion-select value="{{startDates[0].dateValue}}" okText="Okay" cancelText="Dismiss" formControlName="startDuration" name="startDuration">
+                        <ion-select-option *ngFor="let dateObj of startDates" value="{{dateObj.dateValue}}">
+                            {{dateObj.dateString}}
+                        </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label class="font-medium">When did you last use this skill?</ion-label>
+                    <ion-select value="{{endDates[0].dateValue}}" okText="Okay" cancelText="Dismiss" formControlName="endDuration" name="endDuration">
+                        <ion-select-option *ngFor="let dateObj of endDates" value="{{dateObj.dateValue}}">
+                            {{dateObj.dateString}}
+                        </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <div *ngIf="datesError == true" 
+                class="text-red-600 text-sm pl-2">
+                 Your first skill usage month can not be higher than last usage month.
+              </div>
+
                   </div>
-                </div>
-                  
-          </div>
 
-          <div class="mt-2">
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="dismissModal()">
-                  Add this skill
-              </button>
+                    
+                      
+                      <div class="w-full mt-8 text-center">
+                      
+                      <a class="px-4 py-2 border-2 border-green-500 bg-green-500 text-white rounded font-bold cursor-pointer rounded-full" (click)="saveSkillAndDismissModal()">
+                          Save
+                        </a>
+                    </div>
+                  </div>
           </div>
+        
+        </form>
+  
+      </div>
+
+
       
 </ion-content>
  

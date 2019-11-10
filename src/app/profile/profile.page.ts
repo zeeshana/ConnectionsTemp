@@ -17,80 +17,41 @@ import { EditProfilePage } from '../modals/edit-profile/edit-profile.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+
   @ViewChild('barChart', {static: true}) barChart;
+
   user: any;
   bars: any;
   colorArray: any;
   labels = [];
+  colors = [ "#63b3ed", "#48bb78", "#ed8936", "#667eea", "#f56565", "#38b2ac", "#ecc94b", "#9f7aea", "#ed64a6"  ];
+  largestMonths = 0;
+  firstMonth = new Date();
+  lastMonth = new Date();
+  offsetPercentages = new Array();
+  
    
  
   constructor(private authService: AuthService, private dbService: DBService, private modalController: ModalController,
     private storage: Storage) {
-       
       this.user = this.authService.getLoginUser();
-      //this.user.className = 'Person';
-    
 
-      /*
-    this.dbService.getPerson('handle', 'zaheerbaloch').then( result => {
-      this.user = result;
-      this.user.set("className", "Person");
-      // this.user.className = result[0].className;
-      // this.user.objectId = result[0].objectId;
+   }
 
-      console.log( this.user );
+  
+   ionViewDidEnter() {
 
-      
-      storage.set("user", JSON.stringify( this.user ) ).then( result => {
-        console.log("inside set result");
-        console.log(result);
-        storage.get("user").then( result => {
-          console.log( "inside get user");
-          console.log(result);
-          this.user = JSON.parse( result );
-          console.log(this.user);
-          this.createBarChart();
-        });
-      });
-      
-      // this.createBarChart();
-      // this.user = storage.get("user").then( result => {
-      //  console.log(this.user);
-      // });
-      
+    this.createBarChart();
 
-      // TODO: this needs to change to authserivce to get loggedin user.
-      //  TODO: storage.set("user", this.user.toString());
-      // storage.get("user").then( result => {
-      //   this.user = result;
-      //   console.log( this.user );
-        
-      // }); 
-      
-      
-    });
-*/
-    
-  }
+   }
 
-  ngOnInit() {
-
-    
-
-  }
 
   async presenteditProfileModal() {
     const modal = await this.modalController.create({
       component: EditProfilePage
     });
     modal.onDidDismiss().then( result => {
-      this.storage.get("user").then( result => {
-        console.log( "inside get user");
-        console.log(result);
-        this.user = JSON.parse( result );
-        console.log(this.user);
-        // this.createBarChart();
-      });
+      this.user = this.authService.getLoginUser();
     });
     return await modal.present();
   }
@@ -100,57 +61,61 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalController.create({
       component: AddskillPage
     });
+    modal.onDidDismiss().then( result => {
+      this.user = this.authService.getLoginUser();
+      this.createBarChart();
+
+    });
     return await modal.present();
   }
 
+  deleteSkill(index) {
+    const skills = this.user.skills;
+    
+    this.user.skills.splice(index, 1);
+    this.authService.setLoggedInUser(this.user);
+    this.dbService.updateProfile(this.user).then(result => {
+      this.user = this.authService.getLoginUser();
+      // this.createBarChart();
+    });
 
-  getLabelFunction = function getLabel(value) {
-    console.log(this.labels);
   }
 
 
-
-  createBarChart() {
+    createBarChart() { 
     
+    console.log("inside createBarChart()");
     let datasets = [];
     // transform skills to dataset
     let skills = this.user.skills;
     
+    console.log( skills );
     
     for(let i=0; i<skills.length; i++) {
       
-      let durations = skills[i].durations;
-     
       this.labels.push( skills[i].name );
-      
-      for(let j=0; j<durations.length; j++) {
-
-        console.log( durations[j].startDate.iso );
         
-        let dataset = {
-          label: skills[i].name,
-          backgroundColor: "#ff4742",
-          borderColor: "#ff4742",
-          fill: false,
-          borderWidth : 20,
-          pointRadius : 0,
-          data: [
-              {
-               
-                x: new Date( durations[j].startDate.iso ),
-                y: i+1
-              }, {
-                x: new Date( durations[j].endDate.iso ),
-                y: i+1
-              },
-          ]
-        };
+      let dataset = {
+        label: skills[i].name,
+        backgroundColor: '#a0aec0',
+        borderColor: '#a0aec0',
+        fill: false,
+        borderWidth : 20,
+        pointRadius : 0,
+        data: [
+            {
+              x: new Date( skills[i].startDuration ),
+              y: i+1
+            }, {
+              x: new Date( skills[i].endDuration ),
+              y: i+1
+            },
+        ]
+      };
 
-        datasets.push( dataset );
+      datasets.push( dataset );
 
-       
 
-      }
     }
 
     this.bars = new Chart(this.barChart.nativeElement, {
@@ -178,10 +143,10 @@ export class ProfilePage implements OnInit {
                     distribution: 'series',
                 },
                 ticks: {
-                  fontSize: 18,
+                  fontSize: 16,
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
-                      steps: 0.5,
+                      stepSize: 1
                 },
                 // gridLines: { color: "rgba(0, 0, 0, 0)", }
               }],
@@ -191,30 +156,31 @@ export class ProfilePage implements OnInit {
                   },
                   ticks : {
                       beginAtZero: true, 
-                      fontSize: 18,
+                      fontSize: 16,
                       fontFamily: 'apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                       fontColor: '#000000',
+                      customLabels: this.labels,
+                      // labelString: "Y Axis"
                       callback: function(value) {
                         //return this.labels[value-1];
-                        if(value == 1) {
-                          return "Java";
-                        } 
-                        if (value == 2) {
-                          return "Angular";
+                        if( value > 0 && value <= this.options.ticks.customLabels.length) {
+                          return this.options.ticks.customLabels[value-1];
+                        } else {
+                          return "";
                         }
-                        //return value;
-                        return "";
+                        
                       },
-                      stepSize: 1,
-                      max: 3
+                      stepSize: 0
                   },
                   // gridLines: { color: "rgba(0, 0, 0, 0)", }
               }]
+          },
+          tooltips: {
+
           }
       }
   });
 }
-
 
 
 

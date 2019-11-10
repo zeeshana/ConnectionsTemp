@@ -9,18 +9,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="bg-gray-500">
   <div class="max-w-3xl mx-auto">
     <div class="flex-1 mt-4 px-4">
       <div
-        class="w-full border-b-2 p-3 flex flex-col items-center md:flex-row md:items-start "
+        class="w-full border-b-2 flex flex-col items-center md:flex-row md:items-start "
       >
         <img
           src="https://avatars.io/twitter/{{ user?.handle }}"
           class="h-32 w-32 rounded-full"/>
         <!-- TODO: Save the image locally when signing up first time or logging in-->
 
-        <div class="person-info flex-1 md:ml-3">
+        <div class="person-info flex-1 md:ml-3 w-full">
           <div class="person-header" class="flex flex-row items-center">
             <div class="person-header-name" class="flex-1 mr-4">
               <a
@@ -31,9 +31,9 @@
                 {{ user?.name }}
               </a>
             </div>
-            <a
-              class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer" (click)="presenteditProfileModal()"
-              >Edit Profile</a>
+            <div><a
+              class="px-4 py-2 border-2 border-green-500 text-green-500 rounded font-bold cursor-pointer rounded-full" (click)="presenteditProfileModal()"
+              >Edit Profile</a></div>
           </div>
           <div class="person-social">
             <a
@@ -42,7 +42,7 @@
               class="mr-2 text-gray-600"
               >@{{ user?.handle }}</a
             >
-            <a
+            <a *ngIf="user?.website != null"
               href="http://{{ user?.website }}"
               class="text-gray-600"
             >
@@ -67,11 +67,15 @@
           <div class="person-tagline mt-2">
             {{ user?.tagline }}
           </div>
+          <div class="mt-2 text-gray-600">
+              <img class="icon inline" src="../../assets/images/location-pin.svg" alt="Location pin pictogram">
+              <span>{{user?.location}}</span>
+          </div>
           <!--<div class="person-follows">
                 follows
               </div> -->
 
-          <div class="person-skills mt-2">
+          <div class="person-skills mt-2 mb-3">
             <!-- <span *ngFor="let skill of p.skills" class="rounded-full border border-black pb-1 px-2 mr-1 text-sm">
                   {{skill?.name}} · {{skill?.durationMonths}}
                 </span> -->
@@ -80,8 +84,8 @@
               *ngFor="let skill of user?.skills"
               class="rounded-full pb-1 px-2 mr-1 bg-gray-200 text-gray-700 text-sm"
             >
-              {{ skill?.name }} ·
-              {{ skill?.durationMonths }}
+              {{ skill?.name }} <!-- ·
+              {{ skill?.duration }} -->
             </span>
           </div>
         </div>
@@ -91,19 +95,72 @@
     <!-- <div class="person-skills mt-2 pt-4 pr-4 pl-4 text-gray-600 flex-1">
             Your profile picture is linked to your Twitter account. 
         </div> -->
-    <div class="flex-1 mt-8 pr-4 pl-4">
+        
+    <div class="flex-1 mt-8 pr-4 pl-4 px-4" *ngIf="user?.skills && user?.skills.length>0">
       <div  class="flex flex-row items-center">
-        <div class="font-bold flex-1 text-2xl">Skills Experience</div>
+        <div class="font-bold flex-1 text-2xl">Skills Experience in Years</div>
         <div>
-            <a class="px-4 py-2 border-2 border-black rounded font-bold cursor-pointer" (click)="presentAddSkillModal()">
-              Edit Skills
+            <a class="px-4 py-2 border-2 border-green-500 text-green-500 rounded font-bold cursor-pointer rounded-full" (click)="presentAddSkillModal()">
+              Add a new skill
             </a>
           </div>
       </div>
 
-      <div class="w-full mt-4">
-        <canvas #barChart></canvas>
+      
+
+    
+
+       
+      
+      <div class="productCards mt-4">
+        <div class="productCard" *ngFor="let skill of user?.skills; let i = index">
+            
+            <img class="productCard__logo" src="https://avatars.wip.chat/{{i*9}}.svg?text={{(skill.duration/12) | number:'1.0-0'}}.{{skill.duration%12}}">
+          
+            <div class="productCard__details">
+              <div class="productCard__details__name">{{skill.name}}</div>
+              <div class="productCard__details__pitch">{{skill.startDuration | date:'MMM, y'}} <span class="text-gray-500">to</span> {{skill.endDuration | date:'MMM, y'}}</div>
+              <div class="productCard__details__pitch"><a (click)="deleteSkill(i)" class="text-red-600 text-sm cursor-pointer">Delete</a></div>
+            </div>
+        </div>
+       
+        </div> 
+        
+      
+
       </div>
+
+
+
+
+
+
+    <div class="flex-1 mt-8 pr-4 pl-4" *ngIf="!user?.skills || user?.skills.length == 0">
+     
+      <div class="w-full mt-4">
+        <div class="flex flex-col items-center">
+            <div class="font-bold flex-1 text-2xl">✋ No skills added yet.</div>
+          
+          <div class="text-center">
+            You have not added any skills yet. Start by adding some of your professional skills.
+          </div>
+          <div class="mt-6">
+              <a class="px-4 py-2 border-2 border-green-500 bg-green-500 text-white rounded font-bold cursor-pointer rounded-full" (click)="presentAddSkillModal()">
+                Add your first skill
+              </a>
+            </div>
+        </div>
+      </div>
+
+
     </div>
+
+    <div class="w-full mt-8">
+        <canvas #barChart></canvas>
+
+    </div>
+
+
+   
   </div>
 </ion-content>

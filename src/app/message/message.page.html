@@ -1,0 +1,102 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Message
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="w-full h-full" >
+      <div class="bg-white shadow h-full">
+          <div class="flex h-full h-full">
+  
+              <div class="flex flex-wrap items-start content-start w-1/3 border-r border-grey-lighter h-full overflow-y-auto">
+                <!-- Search Box  -->
+                  <div class="flex flex-shrink justify-between self-start items-center w-full px-2 py-4">
+                      <div class="text-center px-2 mr-2">
+                          <a href="#" class="no-underline text-lg text-grey hover:text-grey-dark">
+                              <i class="fas fa-bars"></i>
+                          </a>
+                      </div>
+                      <input type="text" placeholder="Search">
+                  </div>
+                <!-- Search Box END -->
+
+                  <ul class="flex flex-col w-full list-reset select-none">
+                      <li *ngFor="let person of this.ms.chats; let i = index;" [ngClass]="(person.personId === this.ms.currentChatWindow.personId) ? 'selected-chat' : ''" class="flex flex-no-wrap items-center hover:bg-grey-lighter text-black cursor-pointer p-3" (click)="this.selectContact(i)">
+                          <div class="flex-no-shrink w-12 h-12 bg-no-repeat bg-center bg-contain rounded-full mr-3" [ngStyle]="{'background-image': 'url(' + person.personPhoto + ')'}"></div>
+                          <div class="flex-1 min-w-0">
+                            <div class="flex justify-between mb-1">
+                              <h2 class="font-semibold text-lg">
+                                  {{person.personName}}
+                              </h2>
+                            </div>
+                            <div class="text-sm text-grey-dark truncate">
+                              <span>
+                                <span class="text-blue"><!-- Last message --> </span>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                  </ul>
+              </div>
+              <div #messagewindow id="messagewindow" class="messagewindow content-start flex-col flex-wrap items-start w-2/3 overflow-y-auto" style="margin-bottom:100px;margin-top:56px">
+                  <div class="flex justify-between items-center w-full border-b border-grey-lighter" style="height:56px;top:56px;position:fixed;">
+                      <div class="flex-auto cursor-pointer select-none py-2 px-6">
+                          <h2 class="font-semibold text-base -mb-1"> {{currentChatpersonName}} </h2>
+                          <span class="text-grey-dark text-sm">
+                          Online
+                      </span>
+                      </div>
+                  </div>
+                  <div id="messages" class="flex flex-auto bg-no-repeat bg-center bg-cover">
+                      <div class="p-4 w-full">
+                          <div *ngIf="this.ms.chatMessages.length > 0">
+                              <div class="w-full" style="margin:auto;text-align: center;" >
+                                  <ion-button color="light" (click)="loadMoreMessages()">Load More..  <ion-icon name="add"></ion-icon></ion-button>
+                              </div>
+                              <br>
+                            </div>
+ 
+
+                        <div *ngFor="let msg of this.ms.chatMessages"> 
+                            <div *ngIf="this.ms.currentPerson.objectId !== msg.userFromId" class="bg-gray-300 rounded-full text-sm p-5 mb-3 relative  w-3/4" >
+                                <span>{{msg.messageContent}}</span>
+                                <div class="time text-right"><br>
+                                  {{msg.time | date:'short'}}
+                                </div>
+                            </div>
+                            <div *ngIf="this.ms.currentPerson.objectId == msg.userFromId" class="bg-green-400 rounded-full text-sm p-5 mb-3 relative  w-3/4" style="left:25%;">
+                                <span>{{msg.messageContent}}</span>
+                                <div class="time text-right"><br>
+                                  {{msg.time | date:'short'}}
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                      </div>
+  
+                  </div>
+                  
+                  <div class="bg-white flex flex-wrap self-end items-center text-xl fixed bottom-0 w-2/3" style="height:80px">
+                  
+                      <div class="w-3/4" style="padding:0px 5px">
+                        <textarea autosize maxRows="3" class="message-input" [(ngModel)]="newMessage"></textarea>
+                      </div>
+                      <div class="w-1/4">
+                        <ion-button expand="block" fill="clear" color="primary" [disabled]="newMessage === ''" class="msg-btn" (click)="this.sendMessage()">
+
+                            <ion-icon name="ios-send" slot="icon-only"></ion-icon>
+                        </ion-button>
+                        
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+</div>

@@ -4,6 +4,7 @@ import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
+import { MessageService } from './services/message.service';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private menu: MenuController,
     private authService: AuthService,
+    public ms: MessageService
   ) {
     this.initializeApp();
     
@@ -58,10 +60,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('AppConponent OnInit');
-    this.authService.getAuthStatus().subscribe(authState=>{
+    console.log('AppComponent OnInit');
+    this.authService.getAuthStatus().subscribe(async authState=>{
       console.log('£££££££££££££££ Subscriber ....  £££££££££££££££££££');
       this.authenticated = authState!= null ? true : false;
+      if(this.authenticated)
+        {
+         // await this.ms.initChats();
+          await this.ms.initMessageSubscriptionGlobal();
+        }
     });
   }
 

@@ -32,6 +32,7 @@ import { TranslateConfigService } from './services/translate-config.service';
 
 import { GoogleChartsModule } from 'angular-google-charts';
 import { DBService } from './services/db.service';
+import { MessageService } from './services/message.service';
 
 
 export function LanguageLoader(http: HttpClient) {
@@ -67,7 +68,8 @@ export function LanguageLoader(http: HttpClient) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
     TranslateConfigService,
-    DBService
+    DBService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

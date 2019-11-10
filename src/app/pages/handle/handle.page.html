@@ -30,7 +30,7 @@
                   </div>
                   <div class="person-social">
                     <a routerLink="/{{person?.attributes.handle}}" routerDirection="forward" class="mr-2 text-gray-600">@{{person?.attributes.handle}}</a>
-                    <a href="http://{{person?.attributes.website}}" class="text-gray-600">
+                    <a *ngIf="person?.attributes.website != null" href="http://{{person?.attributes.website}}" class="text-gray-600">
                         <svg class="inline" width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 9.5l5-5M6 4l1.672-1.672a2.829 2.829 0 0 1 4 4L10 8M4 6L2.328 7.672a2.829 2.829 0 0 0 4 4L8 10" stroke="#4a5568" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg> 
                         {{person?.attributes.website}}
                     </a> 
