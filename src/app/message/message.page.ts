@@ -15,6 +15,7 @@ export class MessagePage implements OnInit {
   //chats:Array<any> = [];
   
   //messages: Array<any> = [];
+  mobile = false;
   newMessage= "";
   queryParamUsername = "";
   subscription:any = null;
@@ -31,13 +32,18 @@ export class MessagePage implements OnInit {
   constructor( private route: ActivatedRoute,private router: Router, public ms: MessageService,private _cdr: ChangeDetectorRef,) {  console.log("MessagePage : @@@@@@@@@@@@@@@ constructor");}
   ngOnInit() {
     console.log("MessagePage : @@@@@@@@@@@@@@@ ngOnInit");
-    
+    console.log(window.screen.width);
+    if (window.screen.width <= 600) { // 768px portrait
+      this.mobile = true;
+      console.log("Mobile");
+    }
    //this.sessionId = this.route.queryParamMap.pipe(Map(params => params.get('handle') || 'None'));
 
   }
   ngOnDestroy() {
     console.log("MessagePage : @@@@@@@@@@@@@@@ ngOnDestroy");
-    this.subscription.unsubscribe();
+    if(this.subscription)
+      this.subscription.unsubscribe();
   }
 
   ionViewDidEnter() {

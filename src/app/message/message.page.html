@@ -11,9 +11,10 @@
 
   <div class="w-full h-full" >
       <div class="bg-white shadow h-full">
+        
           <div class="flex h-full h-full">
-  
-              <div class="flex flex-wrap items-start content-start w-1/3 border-r border-grey-lighter h-full overflow-y-auto">
+           
+              <div class="flex flex-wrap items-start content-start w-1/4 border-r border-grey-lighter h-full overflow-y-auto">
                 <!-- Search Box  -->
                   <div class="flex flex-shrink justify-between self-start items-center w-full px-2 py-4">
                       <div class="text-center px-2 mr-2">
@@ -28,7 +29,7 @@
                   <ul class="flex flex-col w-full list-reset select-none">
                       <li *ngFor="let person of this.ms.chats; let i = index;" [ngClass]="(person.personId === this.ms.currentChatWindow.personId) ? 'selected-chat' : ''" class="flex flex-no-wrap items-center hover:bg-grey-lighter text-black cursor-pointer p-3" (click)="this.selectContact(i)">
                           <div class="flex-no-shrink w-12 h-12 bg-no-repeat bg-center bg-contain rounded-full mr-3" [ngStyle]="{'background-image': 'url(' + person.personPhoto + ')'}"></div>
-                          <div class="flex-1 min-w-0">
+                          <div class="flex-1 min-w-0" *ngIf="!this.mobile"> 
                             <div class="flex justify-between mb-1">
                               <h2 class="font-semibold text-lg">
                                   {{person.personName}}
@@ -43,7 +44,7 @@
                         </li>
                   </ul>
               </div>
-              <div #messagewindow id="messagewindow" class="messagewindow content-start flex-col flex-wrap items-start w-2/3 overflow-y-auto" style="margin-bottom:100px;margin-top:56px">
+              <div #messagewindow id="messagewindow" class="messagewindow content-start flex-col flex-wrap items-start w-3/4 overflow-y-auto" style="margin-bottom:100px;margin-top:56px">
                   <div class="flex justify-between items-center w-full border-b border-grey-lighter" style="height:56px;top:56px;position:fixed;">
                       <div class="flex-auto cursor-pointer select-none py-2 px-6">
                           <h2 class="font-semibold text-base -mb-1"> {{currentChatpersonName}} </h2>
@@ -63,17 +64,17 @@
  
 
                         <div *ngFor="let msg of this.ms.chatMessages"> 
-                            <div *ngIf="this.ms.currentPerson.objectId !== msg.userFromId" class="bg-gray-300 rounded-full text-sm p-5 mb-3 relative  w-3/4" >
-                                <span>{{msg.messageContent}}</span>
-                                <div class="time text-right"><br>
+                            <div *ngIf="this.ms.currentPerson.objectId !== msg.userFromId" class="bg-gray-300 rounded-full text-sm p-4 mb-3 relative  w-3/4" >
+                                <span>{{msg.messageContent}}</span><br>
+                                <span class="time text-right">
                                   {{msg.time | date:'short'}}
-                                </div>
+                                </span>
                             </div>
-                            <div *ngIf="this.ms.currentPerson.objectId == msg.userFromId" class="bg-green-400 rounded-full text-sm p-5 mb-3 relative  w-3/4" style="left:25%;">
-                                <span>{{msg.messageContent}}</span>
-                                <div class="time text-right"><br>
+                            <div *ngIf="this.ms.currentPerson.objectId == msg.userFromId" class="bg-green-400 rounded-full text-sm p-4 mb-3 relative  w-3/4" style="left:25%;">
+                                <span>{{msg.messageContent}}</span><br>
+                                <span class="time text-right">
                                   {{msg.time | date:'short'}}
-                                </div>
+                                </span>
                             </div>
                         </div>
 
