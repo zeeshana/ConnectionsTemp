@@ -106,7 +106,7 @@ export class AddskillPage implements OnInit {
       this.skill.name = this.formGroup.controls.name.value;
       this.skill.startDuration = startDateString;
       this.skill.endDuration = endDateString;
-      this.skill.duration = Math.floor( (endDate -  startDate) / 2629746000 ); 
+      this.skill.duration = Math.floor( (+endDate -  +startDate) / 2629746000 ); 
       
       // console.log( this.skill.endDuration -  this.skill.startDuration );
       // this.user.skills = new Array();
